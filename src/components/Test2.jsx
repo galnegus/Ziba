@@ -97,11 +97,15 @@ export default class Test2 extends Component {
     console.dir(this.svg);
   }
 
+
+
   handleMouseOver(d) {
     this.svg.classed('hover-network', true);
 
     this.svg.select(`#${sanitizeSelector(d.name)}-node`)
-      .classed('hovered', true);
+      .classed('hovered', true)
+      .transition()
+      .attr('transform', _ => `rotate(${(angle(d.name) + 90) % 360 <= 180 ? 180 : -180})translate(0,0)`);
 
     d.connections.forEach((c) => {
       this.svg.select(`#${sanitizeSelector(c)}-node`)
@@ -116,7 +120,9 @@ export default class Test2 extends Component {
     this.svg.classed('hover-network', false);
 
     this.svg.select(`#${sanitizeSelector(d.name)}-node`)
-      .classed('hovered', false);
+      .classed('hovered', false)
+      .transition()
+      .attr('transform', d2 => `rotate(${angle(d2.name)})translate(${radius},0)`);
 
     d.connections.forEach((c) => {
       this.svg.select(`#${sanitizeSelector(c)}-node`)
