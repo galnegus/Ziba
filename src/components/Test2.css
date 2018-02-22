@@ -1,0 +1,20 @@
+.hover-network .links .link:not(.hovered) {
+  stroke-opacity: 0.05;
+}
+
+.hover-network .node:not(.hovered) text {
+  fill-opacity: 0.1;
+}
+
+.hover-network .node:not(.hovered) circle {
+  fill-opacity: 0.1;
+}
+
+.node.hovered text {
+}
+
+.node.hovered circle {
+}
+
+.links .link.hovered {
+}

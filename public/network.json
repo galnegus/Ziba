@@ -1,0 +1,15 @@
+[
+  {"name": "Financial", "group": "Financial", "color": "#B2A00D", "connections": ["Infrastructure", "Human Resources", "Technological", "Water Demand", "Regionalization"]},
+  {"name": "Infrastructure", "group": "Infrastructure", "color": "#30BB38","connections": ["Financial", "Human Resources", "Technological", "Consumer Perception", "Water Demand"]},
+  {"name": "Climate Change", "group": "Environmental", "color": "#F0766B", "connections": ["Natural Hazards", "Water Rights", "Consumer Perception", "Environmental Regulations", "Water Demand"]},
+  {"name": "Natural Hazards", "group": "Environmental", "color": "#F0766B","connections": ["Financial", "Infrastructure", "Political and Legislative", "Water Rights", "Consumer Perception"]},
+  {"name": "Regionalization", "group": "Regulatory", "color": "#3DBEC2", "connections": ["Financial", "Infrastructure", "Political and Legislative", "Water Demand"]},
+  {"name": "Water Rights", "group": "Regulatory", "color": "#3DBEC2", "connections": []},
+  {"name": "Environmental Regulations", "group": "Regulatory", "color": "#3DBEC2", "connections": ["Water Rights"]},
+  {"name": "Drinking Water Regulations", "group": "Regulatory", "color": "#3DBEC2", "connections": ["Financial", "Infrastructure", "Technological"]},
+  {"name": "Political and Legislative", "group": "Regulatory", "color": "#3DBEC2", "connections": ["Financial", "Drinking Water Regulations", "Water Rights", "Environmental Regulations", "Water Demand", "Regionalization"]},
+  {"name": "Water Demand", "group": "Societal", "color": "#6D9EFA",  "connections": ["Financial", "Infrastructure", "Consumer Perception", "Regionalization"]},
+  {"name": "Human Resources", "group": "Societal", "color": "#6D9EFA", "connections": ["Technological"]},
+  {"name": "Consumer Perception", "group": "Societal", "color": "#6D9EFA", "connections": ["Financial", "Drinking Water Regulations", "Water Demand"]},
+  {"name": "Technological", "group": "Technological", "color": "#EF5CE3", "connections": ["Infrastructure", "Human Resources", "Water Demand"]}
+]

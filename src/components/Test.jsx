@@ -72,7 +72,9 @@ export default class Test extends Component {
         .sum(d => d.size);
 
       cluster(root);
-      
+
+      console.dir(root);
+
       link = link
         .data(packageImports(root.leaves()))
         .enter()
