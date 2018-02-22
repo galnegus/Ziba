@@ -7,7 +7,7 @@ wave = {}
 
 with open("data.csv") as f:
     for line in csv.DictReader(f):
-      print "{\"name\":\"1.3\", \"weight\":", line["1.3"],"}," , \
+      print "{\"name\":\"\", \"Short Description\":\"\", \"Official Description\":\"\", \"connections\": [{\"name\":\"1.3\", \"weight\":", line["1.3"],"}," , \
             "{\"name\":\"1.5\", \"weight\":", line["1.5"],"},", \
             "{\"name\":\"2.2\", \"weight\":", line["2.2"],"},", \
             "{\"name\":\"2.4\", \"weight\":", line["2.4"],"},", \
@@ -40,4 +40,4 @@ with open("data.csv") as f:
             "{\"name\":\"16.4\", \"weight\":", line["16.4"],"},", \
             "{\"name\":\"16.6\", \"weight\":", line["16.6"],"},", \
             "{\"name\":\"17.11\", \"weight\":", line["17.11"],"},", \
-            "{\"name\":\"17.13\", \"weight\":", line["17.13"],"}"
+            "{\"name\":\"17.13\", \"weight\":", line["17.13"],"}]},"
