@@ -6,7 +6,7 @@ import './Test2.css';
 
 const width = 1400;
 const height = 1000;
-const radius = 400;
+const radius = 300;
 
 const angle = scaleBand()
   .range([0, 360]);
@@ -85,7 +85,7 @@ export default class Test2 extends Component {
       nodes.forEach((source) => {
         source.connections.forEach((target) => {
           if (impact[target.name] === undefined) impact[target.name] = 0;
-          impact[target.name] += Math.abs(target.weight);
+          impact[source.name] += Math.abs(target.weight);
           links.push({
             source,
             target: nodeByName.get(target.name),
@@ -143,6 +143,7 @@ export default class Test2 extends Component {
         .attr('x', 75)
         .text(d => d['Short Description'])
         .style('fill', d => name2color(d.name))
+        .style('font-size', '0.8em')
         .filter(d => (angle(d.name) + 90) % 360 > 180) // flipped
         .attr('x', -75)
         .attr('transform', 'rotate(-180)')
@@ -196,10 +197,10 @@ export default class Test2 extends Component {
       .transition()
       .attr('transform', `${(angle(d.name) + 90) % 360 > 180 ? `rotate(${180})` : ''}translate(0,0)`);
 
-    this.svg.selectAll(`.source-${sanitizeSelector(d.name)}, .target-${sanitizeSelector(d.name)}`)
+    this.svg.selectAll(`.source-${sanitizeSelector(d.name)}`)
       .each((link) => {
-        const nodeName = link.source.name === d.name ? link.target.name : link.source.name;
-        this.svg.select(`#node-${sanitizeSelector(nodeName)}`)
+        // const nodeName = link.source.name === d.name ? link.target.name : link.source.name;
+        this.svg.select(`#node-${sanitizeSelector(link.target.name)}`)
           .classed('clicked', true);
       })
       .classed('clicked', true)
@@ -220,10 +221,10 @@ export default class Test2 extends Component {
       .transition()
       .attr('transform', `rotate(${angle(d.name)})translate(${radius},0)`);
 
-    this.svg.selectAll(`.source-${sanitizeSelector(d.name)}, .target-${sanitizeSelector(d.name)}`)
+    this.svg.selectAll(`.source-${sanitizeSelector(d.name)}`)
       .each((link) => {
-        const nodeName = link.source.name === d.name ? link.target.name : link.source.name;
-        this.svg.select(`#node-${sanitizeSelector(nodeName)}`)
+        // const nodeName = link.source.name === d.name ? link.target.name : link.source.name;
+        this.svg.select(`#node-${sanitizeSelector(link.target.name)}`)
           .classed('clicked', false);
       })
       .classed('clicked', false)
