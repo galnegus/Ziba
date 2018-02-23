@@ -4,6 +4,9 @@
   top: 0;
   left: 0; }
 
+.node {
+  cursor: pointer; }
+
 .hover-network:not(.click-network) .links .link:not(.hovered) {
   stroke-opacity: 0.05; }
 
