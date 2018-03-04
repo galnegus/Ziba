@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { select, scaleBand, map, json } from 'd3';
 import './Test2.css';
+import SecondOrder from './secondorder'
 
 // https://gist.github.com/tbadams45/ba2e202ce45f6ed7e60c1220d767a5d2
 
@@ -63,6 +64,16 @@ function name2color(name) {
 }
 
 export default class Test2 extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      links: [],
+      nodes: [],
+      selectedNode: null,
+    };
+  }
+
   componentDidMount() {
     document.addEventListener('click', this.clickOutside.bind(this));
 
@@ -97,6 +108,7 @@ export default class Test2 extends Component {
 
       angle.domain(nodes.map(d => d.name));
 
+      this.setState({links, nodes});
 
       const link = this.svg.append('g')
         .classed('links', true)
@@ -241,9 +253,15 @@ export default class Test2 extends Component {
   }
 
   render() {
+    // console.log("this.state.links", this.state.links)
+    console.log("this.state.nodes", this.state.nodes)
+    // console.log("this.state.nodes", this.state.nodes[26])
     return (
       <div>
         <div className="container" ref={(container) => { this.container = container; }} />
+        <div className="donut" >
+          <SecondOrder selectedNode={this.state.nodes[31]} colorMap={colorMap} links={this.state.links} nodes={this.state.nodes} />
+        </div>
       </div>
     );
   }
