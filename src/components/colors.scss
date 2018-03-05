@@ -1,0 +1,137 @@
+$color_-3: #CC0000;
+$color_-2: #D44C00;
+$color_-1: #DC9800;
+$color_0: #E5E500;
+$color_1: #A1C708;
+$color_2: #5DA910;
+$color_3: #198C19;
+
+$colorblind_-3: #7F0000;
+$colorblind_-2: #9C413B;
+$colorblind_-1: #BA8376;
+$colorblind_0: #D8C5B2;
+$colorblind_1: #A79AB9;
+$colorblind_2: #7670C0;
+$colorblind_3: #4646C7;
+
+// color
+.fill_-3 {
+  fill: $color_-3;
+}
+
+.fill_-2 {
+  fill: $color_-2;
+}
+
+.fill_-1 {
+  fill: $color_-1;
+}
+
+.fill_0 {
+  fill: $color_0;
+}
+
+.fill_1 {
+  fill: $color_1;
+}
+
+.fill_2 {
+  fill: $color_2;
+}
+
+.fill_3 {
+  fill: $color_3;
+}
+
+// stroke
+.hover-network, .click-network {
+  .stroke_-3 {
+    stroke: $color_-3;
+  }
+
+  .stroke_-2 {
+    stroke: $color_-2;
+  }
+
+  .stroke_-1 {
+    stroke: $color_-1;
+  }
+
+  .stroke_0 {
+    stroke: $color_0;
+  }
+
+  .stroke_1 {
+    stroke: $color_1;
+  }
+
+  .stroke_2 {
+    stroke: $color_2;
+  }
+
+  .stroke_3 {
+    stroke: $color_3;
+  }
+}
+
+.colorblind {
+  // color
+  .fill_-3 {
+    fill: $colorblind_-3;
+  }
+
+  .fill_-2 {
+    fill: $colorblind_-2;
+  }
+
+  .fill_-1 {
+    fill: $colorblind_-1;
+  }
+
+  .fill_0 {
+    fill: $colorblind_0;
+  }
+
+  .fill_1 {
+    fill: $colorblind_1;
+  }
+
+  .fill_2 {
+    fill: $colorblind_2;
+  }
+
+  .fill_3 {
+    fill: $colorblind_3;
+  }
+
+  // stroke
+  .hover-network, .click-network {
+    .stroke_-3 {
+      stroke: $colorblind_-3;
+    }
+
+    .stroke_-2 {
+      stroke: $colorblind_-2;
+    }
+
+    .stroke_-1 {
+      stroke: $colorblind_-1;
+    }
+
+    .stroke_0 {
+      stroke: $colorblind_0;
+    }
+
+    .stroke_1 {
+      stroke: $colorblind_1;
+    }
+
+    .stroke_2 {
+      stroke: $colorblind_2;
+    }
+
+    .stroke_3 {
+      stroke: $colorblind_3;
+    }
+  }
+}

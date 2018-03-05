@@ -1,0 +1,150 @@
+/* NOTE: Edit: Donut.scss, NOT Donut.css */
+.fill_-3 {
+  fill: #CC0000; }
+
+.fill_-2 {
+  fill: #D44C00; }
+
+.fill_-1 {
+  fill: #DC9800; }
+
+.fill_0 {
+  fill: #E5E500; }
+
+.fill_1 {
+  fill: #A1C708; }
+
+.fill_2 {
+  fill: #5DA910; }
+
+.fill_3 {
+  fill: #198C19; }
+
+.hover-network .stroke_-3, .click-network .stroke_-3 {
+  stroke: #CC0000; }
+
+.hover-network .stroke_-2, .click-network .stroke_-2 {
+  stroke: #D44C00; }
+
+.hover-network .stroke_-1, .click-network .stroke_-1 {
+  stroke: #DC9800; }
+
+.hover-network .stroke_0, .click-network .stroke_0 {
+  stroke: #E5E500; }
+
+.hover-network .stroke_1, .click-network .stroke_1 {
+  stroke: #A1C708; }
+
+.hover-network .stroke_2, .click-network .stroke_2 {
+  stroke: #5DA910; }
+
+.hover-network .stroke_3, .click-network .stroke_3 {
+  stroke: #198C19; }
+
+.colorblind .fill_-3 {
+  fill: #7F0000; }
+
+.colorblind .fill_-2 {
+  fill: #9C413B; }
+
+.colorblind .fill_-1 {
+  fill: #BA8376; }
+
+.colorblind .fill_0 {
+  fill: #D8C5B2; }
+
+.colorblind .fill_1 {
+  fill: #A79AB9; }
+
+.colorblind .fill_2 {
+  fill: #7670C0; }
+
+.colorblind .fill_3 {
+  fill: #4646C7; }
+
+.colorblind .hover-network .stroke_-3, .colorblind .click-network .stroke_-3 {
+  stroke: #7F0000; }
+
+.colorblind .hover-network .stroke_-2, .colorblind .click-network .stroke_-2 {
+  stroke: #9C413B; }
+
+.colorblind .hover-network .stroke_-1, .colorblind .click-network .stroke_-1 {
+  stroke: #BA8376; }
+
+.colorblind .hover-network .stroke_0, .colorblind .click-network .stroke_0 {
+  stroke: #D8C5B2; }
+
+.colorblind .hover-network .stroke_1, .colorblind .click-network .stroke_1 {
+  stroke: #A79AB9; }
+
+.colorblind .hover-network .stroke_2, .colorblind .click-network .stroke_2 {
+  stroke: #7670C0; }
+
+.colorblind .hover-network .stroke_3, .colorblind .click-network .stroke_3 {
+  stroke: #4646C7; }
+
+.network:not(.click-network) .donuts .arc path, .network:not(.click-network) .donuts .arc text {
+  fill-opacity: 0; }
+
+.network:not(.click-network) .node {
+  cursor: pointer; }
+
+.donuts .arc.destroy path, .donuts .arc.destroy text {
+  fill-opacity: 0; }
+
+.hover-network:not(.click-network) .links .link:not(.hovered) {
+  stroke-opacity: 0.05; }
+
+.hover-network:not(.click-network) .node:not(.hovered) text, .hover-network:not(.click-network) .node:not(.hovered) circle {
+  fill-opacity: 0.1; }
+
+.click-network .links {
+  stroke-opacity: 0; }
+
+.click-network .node:not(.clicked) text, .click-network .node:not(.clicked) circle {
+  fill-opacity: 0; }
+
+.hover-network .link.weight_1, .click-network .link.weight_1 {
+  stroke-width: 2px; }
+
+.hover-network .link.weight_2, .click-network .link.weight_2 {
+  stroke-width: 3px; }
+
+.hover-network .link.weight_3, .click-network .link.weight_3 {
+  stroke-width: 5px; }
+
+.hover-network .link.weight_0, .click-network .link.weight_0 {
+  stroke-width: 1px; }
+
+.hover-network .link.weight_-1, .click-network .link.weight_-1 {
+  stroke-width: 2px; }
+
+.hover-network .link.weight_-2, .click-network .link.weight_-2 {
+  stroke-width: 3px; }
+
+.hover-network .link.weight_-3, .click-network .link.weight_-3 {
+  stroke-width: 5px; }
+
+.node circle, .node text, .link {
+  transition: fill-opacity 500ms cubic-bezier(0.23, 1, 0.32, 1), stroke-opacity 500ms cubic-bezier(0.23, 1, 0.32, 1), stroke-width 200ms cubic-bezier(0.23, 1, 0.32, 1); }
+
+.node.clicked text {
+  fill: #fff !important; }
+
+.donuts .arc path, .donuts .arc text {
+  transition: fill-opacity 500ms cubic-bezier(0.23, 1, 0.32, 1); }
+
+.link.weight_1 {
+  stroke-width: 0.5px; }
+
+.link.weight_2 {
+  stroke-width: 1px; }
+
+.link.weight_3 {
+  stroke-width: 2px; }
+
+.link.weight_-1 {
+  stroke-width: 0.5px; }
+
+.link.weight_-2 {
+  stroke-width: 1px; }

@@ -1,0 +1,83 @@
+.fill_-3 {
+  fill: #CC0000; }
+
+.fill_-2 {
+  fill: #D44C00; }
+
+.fill_-1 {
+  fill: #DC9800; }
+
+.fill_0 {
+  fill: #E5E500; }
+
+.fill_1 {
+  fill: #A1C708; }
+
+.fill_2 {
+  fill: #5DA910; }
+
+.fill_3 {
+  fill: #198C19; }
+
+.hover-network .stroke_-3, .click-network .stroke_-3 {
+  stroke: #CC0000; }
+
+.hover-network .stroke_-2, .click-network .stroke_-2 {
+  stroke: #D44C00; }
+
+.hover-network .stroke_-1, .click-network .stroke_-1 {
+  stroke: #DC9800; }
+
+.hover-network .stroke_0, .click-network .stroke_0 {
+  stroke: #E5E500; }
+
+.hover-network .stroke_1, .click-network .stroke_1 {
+  stroke: #A1C708; }
+
+.hover-network .stroke_2, .click-network .stroke_2 {
+  stroke: #5DA910; }
+
+.hover-network .stroke_3, .click-network .stroke_3 {
+  stroke: #198C19; }
+
+.colorblind .fill_-3 {
+  fill: #7F0000; }
+
+.colorblind .fill_-2 {
+  fill: #9C413B; }
+
+.colorblind .fill_-1 {
+  fill: #BA8376; }
+
+.colorblind .fill_0 {
+  fill: #D8C5B2; }
+
+.colorblind .fill_1 {
+  fill: #A79AB9; }
+
+.colorblind .fill_2 {
+  fill: #7670C0; }
+
+.colorblind .fill_3 {
+  fill: #4646C7; }
+
+.colorblind .hover-network .stroke_-3, .colorblind .click-network .stroke_-3 {
+  stroke: #7F0000; }
+
+.colorblind .hover-network .stroke_-2, .colorblind .click-network .stroke_-2 {
+  stroke: #9C413B; }
+
+.colorblind .hover-network .stroke_-1, .colorblind .click-network .stroke_-1 {
+  stroke: #BA8376; }
+
+.colorblind .hover-network .stroke_0, .colorblind .click-network .stroke_0 {
+  stroke: #D8C5B2; }
+
+.colorblind .hover-network .stroke_1, .colorblind .click-network .stroke_1 {
+  stroke: #A79AB9; }
+
+.colorblind .hover-network .stroke_2, .colorblind .click-network .stroke_2 {
+  stroke: #7670C0; }
+
+.colorblind .hover-network .stroke_3, .colorblind .click-network .stroke_3 {
+  stroke: #4646C7; }

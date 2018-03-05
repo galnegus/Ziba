@@ -1,0 +1,83 @@
+.legend {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    text-align: left;
+}
+
+.toggle-label {
+    position: relative;
+    vertical-align: middle;
+}
+
+.toggle-label__text {
+    font-size: 0.9em;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.hidden-legend {
+    display: none;
+}
+
+.react-toggle {
+    vertical-align: middle;
+}
+
+.right-color-legend .legend-title {
+    text-align: center;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 90%;
+}
+.right-color-legend .legend-scale ul {
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+}
+.right-color-legend .legend-scale ul li {
+    display: block;
+    float: left;
+    width: 50px;
+    margin-bottom: 6px;
+    text-align: center;
+    font-size: 80%;
+    list-style: none;
+}
+.right-color-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 15px;
+    width: 50px;
+}
+
+/* colorblind state */
+.color-blind-legend .legend-title {
+    text-align: center;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 90%;
+}
+.color-blind-legend .legend-scale ul {
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+}
+.color-blind-legend .legend-scale ul li {
+    display: block;
+    float: left;
+    width: 50px;
+    margin-bottom: 6px;
+    text-align: center;
+    font-size: 80%;
+    list-style: none;
+}
+.color-blind-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 15px;
+    width: 50px;
+}
