@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { select, json, pie, arc } from 'd3';
+import { select, json, pie, arc, scaleQuantize } from 'd3';
 import './Test2.css';
 
 const width = 1400;
 const height = 1000;
 const radius = 300;
+const thickness = 50;
 
 // https://prismic-io.s3.amazonaws.com/globalgoals%2Fd0d19c85-8b76-4549-a24c-59d40eb9985f_the-global-goals-style-guide-20180214.pdf
 const colorMap = {
@@ -31,6 +32,11 @@ function name2color(name) {
   return colorMap[name.match(/[0-9]+(?=\.)/)[0]];
 }
 
+
+const colors = scaleQuantize()
+  .domain([-3, 3])
+  .range(['#A64A44', '#EC6769', '#F3AA75', '#FCE789', '#CCDF80', '#97CE7D', '#62BF79']);
+
 export default class Donut extends Component {
   componentDidMount() {
     this.svg = select(this.container).append('svg')
@@ -52,10 +58,9 @@ export default class Donut extends Component {
         .sort((a, b) => (a.name < b.name ? -1 : (a.name > b.name ? 1 : 0))); // not correct, just testing
 
       const coolArc = arc()
-        .outerRadius(200)
-        .innerRadius(150);
-
-      console.dir(nodeByName.get('1.3').connections);
+        .outerRadius(radius)
+        .innerRadius(radius - thickness)
+        .padAngle(0.01);
 
       const svgArc = this.svg.selectAll('.arc')
         .data(coolPie(nodeByName.get('1.3').connections))
@@ -65,7 +70,7 @@ export default class Donut extends Component {
 
       svgArc.append('path')
         .attr('d', coolArc)
-        .style('fill', d => name2color(d.data.name));
+        .style('fill', d => colors(d.data.weight));
 
       svgArc.append('text')
         .attr('transform', (d) => {
@@ -77,8 +82,10 @@ export default class Donut extends Component {
           `;
         })
         .attr('dy', '.35em')
+        .attr('x', thickness / 2)
         .text(d => d.data.name)
         .filter(d => (d.startAngle + d.endAngle) / 2 > Math.PI)
+        .attr('x', -thickness / 2)
         .style('text-anchor', 'end');
     });
   }
