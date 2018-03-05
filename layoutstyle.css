@@ -1,0 +1,49 @@
+.container1 {
+    margin-right: 5px;;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#maintitle{
+    font-family: sans-serif;
+    padding:6px;
+    
+}
+
+.separate{
+    line-height:12px;
+    padding:2px;
+    font-family: sans-serif;
+    font-size: 12px;
+  
+}
+
+#legend{
+    padding:120px 5px 5px 5px;
+    
+}
+
+#buttonline{
+    padding:110px 5px 5px 5px;
+    
+}
+
+.buttons{
+    line-height:12px;
+    padding:2px;
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+button{
+    
+    background-color:skyblue;
+               border-radius:5px;
+               border:0;
+               height:18px;
+               width:40px;
+             
+}
+
+
