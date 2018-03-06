@@ -1,7 +1,7 @@
 /* eslint indent: 0 */
 
 import React, { Component } from 'react';
-import { select, json, pie, arc, scaleThreshold, scaleBand } from 'd3';
+import { select, json, pie, arc, scaleThreshold, scaleBand , event} from 'd3';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/fontawesome-free-solid';
 import Legend from './Legend';
@@ -305,20 +305,20 @@ export default class Donut extends Component {
         .attr('d', coolArc(firstRadius, thickness))
         .attr('class', d => `fill_${weightScale(d.data.weight)}`)
         .on('mouseover', (d) => {
-           tooltip.style("visibility", "visible")
-                  .text(this.nodeByName.get(d.data.name)["Short Description"])
-                  .style("fill", "red")
-                  .attr("x", 10)
-                  .attr("y", 10)
+          tooltip
+            .style('visibility', 'visible')
+            .style('left', event.pageX + 'px')
+            .style('top', event.pageY + 'px')
+            .text(this.nodeByName.get(d.data.name)["Short Description"]);
         })
         .on("mouseout", (d) => {
             tooltip.style("visibility", "hidden");
           })
-        //.style('fill', d => weightColor(d.data.weight));
 
-    var tooltip = select("g.arc--first")
-        .append("text")
-
+var tooltip = select("body")
+    .append("div")
+    .attr('class', 'tooltip')
+    // .style("opacity", 10);
 
     firstSlice.append('text')
         .attr('transform', (d) => {
