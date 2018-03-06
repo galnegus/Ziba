@@ -142,4 +142,14 @@
   }
 }
 
+.tooltip {
+  background-color: lightblue;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 9px;
+  position: absolute;
+  display: inline-block;
+  margin-top: -50px;
+  visibility: hidden;
+}
 
