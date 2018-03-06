@@ -1,7 +1,7 @@
 /* eslint indent: 0 */
 
 import React, { Component } from 'react';
-import { select, json, pie, arc, scaleThreshold, scaleBand } from 'd3';
+import { select, json, pie, arc, scaleThreshold, scaleBand , event} from 'd3';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/fontawesome-free-solid';
 import Legend from './Legend';
@@ -300,10 +300,25 @@ export default class Donut extends Component {
 
     const thickness = this.impact[nodeName];
 
+
     firstSlice.append('path')
         .attr('d', coolArc(firstRadius, thickness))
-        .attr('class', d => `fill_${weightScale(d.data.weight)}`);
-        //.style('fill', d => weightColor(d.data.weight));
+        .attr('class', d => `fill_${weightScale(d.data.weight)}`)
+        .on('mouseover', (d) => {
+          tooltip
+            .style('visibility', 'visible')
+            .style('left', event.pageX + 'px')
+            .style('top', event.pageY + 'px')
+            .text(this.nodeByName.get(d.data.name)["Short Description"]);
+        })
+        .on("mouseout", (d) => {
+            tooltip.style("visibility", "hidden");
+          })
+
+var tooltip = select("body")
+    .append("div")
+    .attr('class', 'tooltip')
+    // .style("opacity", 10);
 
     firstSlice.append('text')
         .attr('transform', (d) => {
@@ -323,6 +338,7 @@ export default class Donut extends Component {
       .filter(d => ((d.startAngle + d.endAngle) / 2 > (Math.PI / 2) && (d.startAngle + d.endAngle) / 2 < (3 * Math.PI) / 2))
         .attr('x', -((thickness / 2) + 10))
         .style('text-anchor', 'end');
+
 
     // second order, (this could definitely be generalized...)
     const secondOrderData = this.secondDonut(nodeName);
