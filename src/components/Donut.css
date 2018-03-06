@@ -164,7 +164,7 @@
   .back-container.back-container--shown {
     opacity: 1;
     visibility: visible; }
-    
+
 .tooltip {
   background-color: lightblue;
   font-weight: bold;
@@ -173,5 +173,4 @@
   position: absolute;
   display: inline-block;
   margin-top: -50px;
-  visibility: hidden;
-}
+  visibility: hidden; }
