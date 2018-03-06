@@ -300,10 +300,25 @@ export default class Donut extends Component {
 
     const thickness = this.impact[nodeName];
 
+
     firstSlice.append('path')
         .attr('d', coolArc(firstRadius, thickness))
-        .attr('class', d => `fill_${weightScale(d.data.weight)}`);
+        .attr('class', d => `fill_${weightScale(d.data.weight)}`)
+        .on('mouseover', (d) => {
+           tooltip.style("visibility", "visible")
+                  .text(this.nodeByName.get(d.data.name)["Short Description"])
+                  .style("fill", "red")
+                  .attr("x", 10)
+                  .attr("y", 10)
+        })
+        .on("mouseout", (d) => {
+            tooltip.style("visibility", "hidden");
+          })
         //.style('fill', d => weightColor(d.data.weight));
+
+    var tooltip = select("g.arc--first")
+        .append("text")
+
 
     firstSlice.append('text')
         .attr('transform', (d) => {
@@ -323,6 +338,7 @@ export default class Donut extends Component {
       .filter(d => ((d.startAngle + d.endAngle) / 2 > (Math.PI / 2) && (d.startAngle + d.endAngle) / 2 < (3 * Math.PI) / 2))
         .attr('x', -((thickness / 2) + 10))
         .style('text-anchor', 'end');
+
 
     // second order, (this could definitely be generalized...)
     const secondOrderData = this.secondDonut(nodeName);
