@@ -9,7 +9,7 @@ import Labels from './Labels';
 import logo from '../assets/logo-vertical.svg';
 import './Donut.css';
 
-const width = 1400;
+const width = 850;
 const height = 900;
 const firstRadius = 200;
 const secondRadius = 300;
@@ -53,9 +53,18 @@ function nameSort(a, b) {
   return nameSort(aTail, bTail);
 }
 
+function weightSort(a, b) {
+  const second = a.color !== undefined; // hårdkod :(
+  const aWeight = second ? a.color : a.weight;
+  const bWeight = second ? b.color : b.weight;
+  return aWeight - bWeight;
+}
+
+
 const coolPie = pie()
   .value(d => Math.abs(d.weight))
   .sort((a, b) => nameSort(a.name, b.name));
+  //.sort(weightSort);
 
 function coolArc(radius, thickness) {
   return arc()
@@ -459,13 +468,15 @@ export default class Donut extends Component {
 
   render() {
     return (
-      <div>
+      <div className="wrapper">
         { /* <img className="logo" src={logo} alt="GLOBAL GOALS - For sustainable development" /> */ }
-        <svg className={`container ${this.state.colorblind ? 'colorblind' : ''}`} ref={(svg) => { this.svgRef = svg; }} />
-        <Legend handler={this.colorblindToggleHandler} colorblind={this.state.colorblind} />
-        <div className={`back-container ${this.state.clicked ? 'back-container--shown' : ''}`}>
-          <FontAwesomeIcon icon={faArrowLeft} onClick={this.backHandler} />
+        <div className="svg-container">
+            <svg className={`${this.state.colorblind ? 'colorblind' : ''}`} ref={(svg) => { this.svgRef = svg; }} />
+            <div className={`back-container ${this.state.clicked ? 'back-container--shown' : ''}`}>
+              <FontAwesomeIcon icon={faArrowLeft} onClick={this.backHandler} />
+            </div>
         </div>
+        <Legend handler={this.colorblindToggleHandler} colorblind={this.state.colorblind} />
         <Labels handler={this.labelButtonHandler} />
       </div>
     );

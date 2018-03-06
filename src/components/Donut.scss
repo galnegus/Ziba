@@ -11,6 +11,20 @@
   height: auto;
 }
 
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+
+.svg-container {
+  flex-grow: 1;
+  position: relative;
+
+  @media (min-width: 1600px) {
+    //margin-left: 350px;
+  }
+}
+
 .network:not(.click-network) {
   .donuts .arc {
     path, text {
@@ -99,6 +113,10 @@
   position: absolute;
   top: 450px; // half of svg height
   transform: translate(-500px, -50%);
+  @media (max-width: 1380px) {
+    transform: translate(-425px, -50%);
+  }
+
   left: 50%;
   font-size: 5em;
   color: #ddd;

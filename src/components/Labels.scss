@@ -1,12 +1,16 @@
 .labels-container {
-  position: absolute;
+  /*position: absolute;
   top: 150px;
-  right: 50px;
+  right: 50px;*/
+  margin-top: 100px;
+  margin-right: 30px;
+  padding-left: 30px;
+  border-left: 1px solid #e6e6e6;
 }
 
 .labels {
   list-style-type: none;
-  width: 350px;
+  width: 300px;
   margin: 0;
   padding: 0;
 }
