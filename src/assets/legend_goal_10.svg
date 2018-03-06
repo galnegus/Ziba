@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 1000 1000"
+   version="1.1"
+   sodipodi:docname="legend_goal_10.svg"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06">
+  <metadata
+     id="metadata6046">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Artboard 1</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="690"
+     inkscape:window-height="480"
+     id="namedview6044"
+     showgrid="false"
+     inkscape:zoom="0.236"
+     inkscape:cx="605.9322"
+     inkscape:cy="500"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs5977">
+    <style
+       id="style5975">
+      .cls-1 {
+        fill: #dd1367;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <title
+     id="title5979">Artboard 1</title>
+  <rect
+     class="cls-1"
+     width="1000"
+     height="1000"
+     id="rect5981" />
+  <g
+     id="g6041"
+     transform="matrix(1.4448023,0,0,1.4448023,-222.40115,-408.0642)">
+    <g
+       id="g6029">
+      <path
+         class="cls-2"
+         d="M 592.3,657.55 H 407.68 a 2.14,2.14 0 0 0 -2,2.24 v 55.49 a 2.14,2.14 0 0 0 2,2.25 H 592.3 a 2.14,2.14 0 0 0 2,-2.25 v -55.49 a 2.14,2.14 0 0 0 -2,-2.24"
+         id="path6025"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+      <path
+         class="cls-2"
+         d="M 592.3,539.48 H 407.68 a 2.14,2.14 0 0 0 -2,2.24 v 55.49 a 2.13,2.13 0 0 0 2,2.25 H 592.3 a 2.13,2.13 0 0 0 2,-2.25 v -55.49 a 2.14,2.14 0 0 0 -2,-2.24"
+         id="path6027"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+    </g>
+    <g
+       id="g6039">
+      <path
+         class="cls-2"
+         d="M 589.7,455.61 501.08,367 a 1.54,1.54 0 0 0 -2.16,0 l -88.62,88.61 a 1.53,1.53 0 0 0 1.08,2.61 h 177.24 a 1.53,1.53 0 0 0 1.08,-2.61 z"
+         id="path6031"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+      <path
+         class="cls-2"
+         d="m 672.9,718.21 88.62,-88.62 a 1.53,1.53 0 0 0 0,-2.17 L 672.9,538.8 a 1.53,1.53 0 0 0 -2.61,1.08 v 177.25 a 1.53,1.53 0 0 0 2.61,1.08 z"
+         id="path6033"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+      <path
+         class="cls-2"
+         d="M 410.3,801.41 498.92,890 a 1.52,1.52 0 0 0 2.16,0 l 88.62,-88.62 a 1.53,1.53 0 0 0 -1.08,-2.62 H 411.38 a 1.53,1.53 0 0 0 -1.08,2.65 z"
+         id="path6035"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+      <path
+         class="cls-2"
+         d="m 327.1,538.8 -88.62,88.62 a 1.53,1.53 0 0 0 0,2.17 l 88.62,88.62 a 1.53,1.53 0 0 0 2.61,-1.08 V 539.88 a 1.53,1.53 0 0 0 -2.61,-1.08 z"
+         id="path6037"
+         inkscape:connector-curvature="0"
+         style="fill:#ffffff" />
+    </g>
+  </g>
+</svg>

@@ -35,7 +35,7 @@ class Legend extends Component {
             </ul>
           </div>
         </div>
-        <div>
+        <div className="toggle-container">
           <label className="toggle-label" htmlFor="colorblind-toggle">
             <Toggle
               //defaultChecked={this.state.baconIsReady}

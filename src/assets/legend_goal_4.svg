@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 1000 1000"
+   version="1.1"
+   sodipodi:docname="legend_goal_4.svg"
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06">
+  <metadata
+     id="metadata494">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Artboard 1</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1118"
+     inkscape:window-height="579"
+     id="namedview492"
+     showgrid="false"
+     inkscape:zoom="0.236"
+     inkscape:cx="500"
+     inkscape:cy="500"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs439">
+    <style
+       id="style437">
+      .cls-1 {
+        fill: #c5192d;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <title
+     id="title441">Artboard 1</title>
+  <rect
+     class="cls-1"
+     width="999.96"
+     height="1000"
+     id="rect443" />
+  <g
+     id="g489"
+     transform="matrix(1.3185674,0,0,1.2968974,-159.28451,-305.93278)">
+    <polygon
+       class="cls-2"
+       points="258.96,767.63 438.3,821.74 438.3,536.19 258.96,432.63 "
+       id="polygon479"
+       style="fill:#ffffff" />
+    <polygon
+       class="cls-2"
+       points="638.53,767.59 638.53,432.64 458.03,536.87 458.03,821.86 "
+       id="polygon481"
+       style="fill:#ffffff" />
+    <path
+       class="cls-2"
+       d="m 779.32,424.15 a 21.22,21.22 0 1 0 -42.43,0 V 447 h 42.43 z"
+       id="path483"
+       inkscape:connector-curvature="0"
+       style="fill:#ffffff" />
+    <polygon
+       class="cls-2"
+       points="758.12,835.85 779.31,761.69 774.04,761.69 779.31,761.69 779.31,463.64 774.04,463.64 768.77,463.64 763.19,463.64 752.63,463.64 747.42,463.64 742.16,463.64 736.88,463.64 736.88,761.69 742.16,761.69 736.89,761.69 "
+       id="polygon485"
+       style="fill:#ffffff" />
+    <polygon
+       class="cls-2"
+       points="657.83,776.72 458.56,841.11 449.34,841.11 447.51,841.11 438.3,841.11 239.92,785.68 239.92,431.83 220.68,447.02 220.68,799.17 437.39,859.17 447.51,859.17 449.34,859.17 459.46,859.17 659.4,795.69 677.06,790.49 677.06,447.02 657.83,431.83 "
+       id="polygon487"
+       style="fill:#ffffff" />
+  </g>
+</svg>

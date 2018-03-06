@@ -1,12 +1,16 @@
 /* eslint indent: 0 */
 
 import React, { Component } from 'react';
-import { select, json, pie, arc, scaleQuantize, scaleBand, interpolate } from 'd3';
+import { select, json, pie, arc, scaleThreshold, scaleBand } from 'd3';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/fontawesome-free-solid';
 import Legend from './Legend';
+import Labels from './Labels';
+import logo from '../assets/logo-vertical.svg';
 import './Donut.css';
 
 const width = 1400;
-const height = 1000;
+const height = 900;
 const firstRadius = 200;
 const secondRadius = 300;
 
@@ -35,19 +39,31 @@ function curve({ center = false, origin = 'source' } = {}) {
   };
 }
 
+function nameSort(a, b) {
+  const aSplit = a.split('.');
+  const bSplit = b.split('.');
+  const aHead = parseInt(aSplit[0], 10);
+  const bHead = parseInt(bSplit[0], 10);
+  const aTail = aSplit.slice(1).join('.');
+  const bTail = bSplit.slice(1).join('.');
+
+  if (aHead < bHead) return -1;
+  else if (aHead > bHead) return 1;
+  else if (aTail === bTail) return 0;
+  return nameSort(aTail, bTail);
+}
+
 const coolPie = pie()
   .value(d => Math.abs(d.weight))
-  .sort((a, b) => {
-    if (a.name < b.name) return -1;
-    else if (a.name > b.name) return 1;
-    return 0;
-  });
+  .sort((a, b) => nameSort(a.name, b.name));
 
 function coolArc(radius, thickness) {
   return arc()
     .outerRadius(radius)
     .innerRadius(radius - thickness)
-    .padAngle(0.01);
+    .padAngle(0.01)
+    .startAngle(d => d.startAngle + (Math.PI / 2))
+    .endAngle(d => d.endAngle + (Math.PI / 2))
 }
 
 function sanitizeSelector(str) {
@@ -79,21 +95,21 @@ function name2color(name) {
   return colorMap[name.match(/[0-9]+(?=\.)/)[0]];
 }
 
-const weightScale = scaleQuantize()
-  .domain([-3, 3])
+const weightScale = scaleThreshold()
+  .domain([-2.5, -1.5, -0.5, 0.5, 1.5, 2.5])
   .range([-3, -2, -1, 0, 1, 2, 3]);
 
 export default class Donut extends Component {
   constructor(props) {
     super(props);
-    this.state = { colorblind: false };
+    this.state = { colorblind: false, clicked: null };
 
     this.colorblindToggleHandler = this.colorblindToggleHandler.bind(this);
+    this.backHandler = this.backHandler.bind(this);
+    this.labelButtonHandler = this.labelButtonHandler.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener('click', this.clickOutside.bind(this));
-
     this.svg = select(this.svgRef)
         .attr('width', width)
         .attr('height', height)
@@ -132,14 +148,67 @@ export default class Donut extends Component {
     });
   }
 
-  componentWillUnmount() {
-    document.removeEventListener('click', this.clickOutside.bind(this));
+  // NOTE: realWeight = actual weights
+  //       weight = absolute weights
+  secondDonut(nodeName) {
+    let weights = new Map();
+    weights.set(nodeName, { realWeight: 1 });
+    const realThickness = [];
+    const thickness = [];
+    for (let i = 0; i < 2; i += 1) {
+      const output = new Map();
+      weights.forEach((v, k) => {
+        this.nodeByName.get(k).connections.forEach((connection) => {
+          const x = v.realWeight * connection.weight;
+          const n = connection.name;
+          if (output.has(n)) {
+            output.set(n, {
+              realWeight: output.get(n).realWeight + x,
+              weight: output.get(n).weight + Math.abs(x),
+              kColor: output.get(n).kColor + v.realWeight,
+              nColor: output.get(n).nColor + 1,
+            });
+          } else {
+            output.set(n, {
+              realWeight: x,
+              weight: Math.abs(x),
+              kColor: v.realWeight,
+              nColor: 1,
+            });
+          }
+        });
+      });
+      weights = output;
+      realThickness.push(0);
+      thickness.push(0);
+      weights.forEach((v) => {
+        realThickness[i] += v.realWeight;
+        thickness[i] += v.weight;
+      });
+    }
+    const ret = {
+      realThickness,
+      thickness,
+      connections: [],
+    };
+    weights.forEach((v, k) => {
+      ret.connections.push({ ...v, name: k, color: v.kColor / v.nColor });
+    });
+
+    return ret;
   }
 
   colorblindToggleHandler(e) {
-    this.setState({
-      colorblind: e.target.checked,
-    });
+    this.setState({ colorblind: e.target.checked });
+  }
+
+  backHandler() {
+    this.unclick();
+  }
+
+  labelButtonHandler(e) {
+    this.hideNodes();
+    this.showNode(e.target.innerText);
   }
 
   createOverview() {
@@ -202,6 +271,7 @@ export default class Donut extends Component {
         .style('text-anchor', 'end');
   }
 
+
   createDonut(nodeName) {
     if (this.nodes === undefined || this.nodeByName === undefined) {
       console.error('this.nodes or this.nodeByName undefined.');
@@ -209,29 +279,26 @@ export default class Donut extends Component {
     }
 
     // make sure it's removed first!
-    this.donuts.selectAll('g.arc--first')
-        .remove();
-
-    this.donuts.selectAll('g.arc--second')
+    this.donuts.selectAll('g.arc')
         .remove();
 
     const firstArc = this.donuts.selectAll('g.arc--first')
       .data(coolPie(this.nodeByName.get(nodeName).connections));
 
-    const pizza = firstArc.enter()
+    const firstSlice = firstArc.enter()
       .append('g')
         .classed('arc arc--first', true);
 
     const thickness = this.impact[nodeName];
 
-    pizza.append('path')
+    firstSlice.append('path')
         .attr('d', coolArc(firstRadius, thickness))
         .attr('class', d => `fill_${weightScale(d.data.weight)}`);
         //.style('fill', d => weightColor(d.data.weight));
 
-    pizza.append('text')
+    firstSlice.append('text')
         .attr('transform', (d) => {
-          const arcAngle = (180 / Math.PI) * ((d.startAngle + d.endAngle) / 2);
+          const arcAngle = ((180 / Math.PI) * ((d.startAngle + d.endAngle + Math.PI) / 2)) % 360;
           const flip = arcAngle > 180 ? 90 : -90;
           return `
             translate(${coolArc(firstRadius, thickness).centroid(d)})
@@ -241,22 +308,48 @@ export default class Donut extends Component {
         .attr('dy', '.35em')
         .attr('x', (thickness / 2) + 10)
         .text(d => d.data.name)
+        .style('font-size', '0.9em')
         .style('font-weight', 'bold')
         //.style('fill', d => name2color(d.data.name))
-      .filter(d => (d.startAngle + d.endAngle) / 2 > Math.PI)
+      .filter(d => ((d.startAngle + d.endAngle) / 2 > (Math.PI / 2) && (d.startAngle + d.endAngle) / 2 < (3 * Math.PI) / 2))
         .attr('x', -((thickness / 2) + 10))
         .style('text-anchor', 'end');
 
+    // second order, (this could definitely be generalized...)
+    const secondOrderData = this.secondDonut(nodeName);
     const secondArc = this.donuts.selectAll('g.arc--second')
-      .data(coolPie([{ name: 'grey', weight: 30 }]));
+      .data(coolPie(secondOrderData.connections));
 
-    const grayCake = secondArc.enter()
+    const secondThickness = (
+      secondOrderData.realThickness[0] + (secondOrderData.realThickness[1] / 2)
+      ) / 20;
+
+    const secondSlice = secondArc.enter()
       .append('g')
         .classed('arc arc--second', true);
 
-    grayCake.append('path')
-        .attr('d', coolArc(secondRadius, 20))
-        .style('fill', '#ccc');
+    secondSlice.append('path')
+        .attr('d', coolArc(secondRadius, secondThickness))
+        .attr('class', d => `fill_${weightScale(d.data.color)}`);
+
+    secondSlice.append('text')
+        .attr('transform', (d) => {
+          const arcAngle = ((180 / Math.PI) * ((d.startAngle + d.endAngle + Math.PI) / 2)) % 360;
+          const flip = arcAngle > 180 ? 90 : -90;
+          return `
+            translate(${coolArc(secondRadius, secondThickness).centroid(d)})
+            rotate(${arcAngle + flip})
+          `;
+        })
+        .attr('dy', '.35em')
+        .attr('x', (secondThickness / 2) + 30)
+        .text(d => d.data.name)
+        .style('font-size', '0.9em')
+        .style('text-anchor', 'middle')
+        //.style('font-weight', 'bold')
+        //.style('fill', d => name2color(d.data.name))
+      .filter(d => ((d.startAngle + d.endAngle) / 2 > (Math.PI / 2) && (d.startAngle + d.endAngle) / 2 < (3 * Math.PI) / 2))
+        .attr('x', -((secondThickness / 2) + 30))
   }
 
   destroyDonut() {
@@ -300,37 +393,46 @@ export default class Donut extends Component {
 
   handleClick(d) {
     if (this.svg.classed('click-network')) return;
-    if (this.clicked === d) return;
-    else if (this.clicked !== undefined) this.unclick();
+    if (this.state.clicked === d) return;
+    else if (this.state.clicked !== null) this.unclick();
 
-    this.clicked = d;
-    this.createDonut(d.name);
+    this.showNode(d.name);
+  }
+
+  unclick() {
+    this.destroyDonut();
+    this.hideNodes();
+  }
+
+  showNode(nodeName) {
+    this.setState({ clicked: this.nodeByName.get(nodeName) });
+    this.createDonut(nodeName);
     this.svg.classed('click-network', true);
-    this.svg.select(`#node-${sanitizeSelector(d.name)}`)
+    this.svg.select(`#node-${sanitizeSelector(nodeName)}`)
       .classed('clicked', true)
       .transition()
-      .attr('transform', `${(angle(d.name) + 90) % 360 > 180 ? `rotate(${180})` : ''}translate(0,0)`);
+      .attr('transform', `${(angle(nodeName) + 90) % 360 > 180 ? `rotate(${180})` : ''}translate(0,0)`);
 
-    this.svg.select(`#node-${sanitizeSelector(d.name)} circle`)
+    this.svg.select(`#node-${sanitizeSelector(nodeName)} circle`)
       .transition()
       .attr('r', 40);
 
-    this.svg.select(`#node-${sanitizeSelector(d.name)} text`)
+    this.svg.select(`#node-${sanitizeSelector(nodeName)} text`)
       .transition()
       .attr('x', 0)
       .style('text-anchor', 'middle');
 
-    this.svg.selectAll(`.source-${sanitizeSelector(d.name)}`)
+    this.svg.selectAll(`.source-${sanitizeSelector(nodeName)}`)
       .transition()
       .attr('d', link => curve({
         center: true,
-        origin: (link.source.name === d.name ? 'source' : 'target'),
+        origin: (link.source.name === nodeName ? 'source' : 'target'),
       })(link));
   }
 
-  unclick() {
-    const d = this.clicked;
-    this.destroyDonut();
+  hideNodes() {
+    if (this.state.clicked === null) return;
+    const d = this.state.clicked;
 
     this.svg.classed('click-network', false);
     this.svg.select(`#node-${sanitizeSelector(d.name)}`)
@@ -345,27 +447,26 @@ export default class Donut extends Component {
     // TODO: Fix
     this.svg.select(`#node-${sanitizeSelector(d.name)} text`)
       .transition()
-      .attr('x', d => d.x)
+      .attr('x', d2 => d2.x)
       .style('text-anchor', null);
 
     this.svg.selectAll(`.source-${sanitizeSelector(d.name)}`)
       .transition()
       .attr('d', link => curve()(link));
 
-    this.clicked = undefined;
-  }
-
-  clickOutside(e) {
-    if (this.clicked !== undefined && !e.target.parentNode.classList.contains('node')) {
-      this.unclick();
-    }
+    this.setState({ clicked: null });
   }
 
   render() {
     return (
       <div>
+        { /* <img className="logo" src={logo} alt="GLOBAL GOALS - For sustainable development" /> */ }
         <svg className={`container ${this.state.colorblind ? 'colorblind' : ''}`} ref={(svg) => { this.svgRef = svg; }} />
         <Legend handler={this.colorblindToggleHandler} colorblind={this.state.colorblind} />
+        <div className={`back-container ${this.state.clicked ? 'back-container--shown' : ''}`}>
+          <FontAwesomeIcon icon={faArrowLeft} onClick={this.backHandler} />
+        </div>
+        <Labels handler={this.labelButtonHandler} />
       </div>
     );
   }
