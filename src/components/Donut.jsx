@@ -111,7 +111,7 @@ const weightScale = scaleThreshold()
 export default class Donut extends Component {
   constructor(props) {
     super(props);
-    this.state = { colorblind: false, clicked: null };
+    this.state = { colorblind: false, clicked: null, hoveredOver:null };
 
     this.colorblindToggleHandler = this.colorblindToggleHandler.bind(this);
     this.backHandler = this.backHandler.bind(this);
@@ -300,25 +300,26 @@ export default class Donut extends Component {
 
     const thickness = this.impact[nodeName];
 
-
     firstSlice.append('path')
         .attr('d', coolArc(firstRadius, thickness))
         .attr('class', d => `fill_${weightScale(d.data.weight)}`)
         .on('mouseover', (d) => {
+          this.setState({hoveredOver: d.data.name})
           tooltip
             .style('visibility', 'visible')
             .style('left', event.pageX + 'px')
             .style('top', event.pageY + 'px')
-            .text(this.nodeByName.get(d.data.name)["Short Description"]);
+            .html(this.nodeByName.get(d.data.name)["Short Description"] + "<br> " +" weight = " + d.data.weight);
         })
         .on("mouseout", (d) => {
+            this.setState({hoveredOver: null})
             tooltip.style("visibility", "hidden");
           })
 
-var tooltip = select("body")
-    .append("div")
-    .attr('class', 'tooltip')
-    // .style("opacity", 10);
+    var tooltip = select("body")
+        .append("div")
+        .attr('class', 'tooltip')
+        // .style("opacity", 10);
 
     firstSlice.append('text')
         .attr('transform', (d) => {
@@ -355,7 +356,19 @@ var tooltip = select("body")
 
     secondSlice.append('path')
         .attr('d', coolArc(secondRadius, secondThickness))
-        .attr('class', d => `fill_${weightScale(d.data.color)}`);
+        .attr('class', d => `fill_${weightScale(d.data.color)}`)
+        .on('mouseover', (d) => {
+          this.setState({hoveredOver: d.data.name})
+          tooltip
+            .style('visibility', 'visible')
+            .style('left', event.pageX + 'px')
+            .style('top', event.pageY + 'px')
+            .html("Name??? <br> Real weight = " + d.data.realWeight); // better label?
+        })
+        .on("mouseout", (d) => {
+            this.setState({hoveredOver: null})
+            tooltip.style("visibility", "hidden");
+          })
 
     secondSlice.append('text')
         .attr('transform', (d) => {
@@ -442,6 +455,19 @@ var tooltip = select("body")
       .transition()
       .attr('r', 40);
 
+    const selectedNode = this.svg.select(`#node-${sanitizeSelector(nodeName)} circle`)  ;
+    selectedNode.on('mouseover', (d) => {
+          tooltip
+            .style('visibility', 'visible')
+            .style('left', event.pageX + 'px')
+            .style('top', event.pageY + 'px')
+            .html(d["Short Description"] + "<br> First ordet net influence = " + this.impact[nodeName]);
+                                          // + "<br> Second ordet net influence = " + target.weight + target.weight * (1/2) * this.impact[nodeName]);???
+        })
+        .on("mouseout", (d) => {
+            tooltip.style("visibility", "hidden");
+          })
+
     this.svg.select(`#node-${sanitizeSelector(nodeName)} text`)
       .transition()
       .attr('x', 0)
@@ -453,6 +479,11 @@ var tooltip = select("body")
         center: true,
         origin: (link.source.name === nodeName ? 'source' : 'target'),
       })(link));
+
+    var tooltip = select("body")
+      .append("div")
+      .attr('class', 'tooltip')
+      // .style("opacity", 10);
   }
 
   hideNodes() {
@@ -493,7 +524,7 @@ var tooltip = select("body")
             </div>
         </div>
         <Legend handler={this.colorblindToggleHandler} colorblind={this.state.colorblind} />
-        <Labels handler={this.labelButtonHandler} />
+        <Labels handler={this.labelButtonHandler} hoveredOver={this.state.hoveredOver} />
       </div>
     );
   }

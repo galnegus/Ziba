@@ -18,10 +18,10 @@ class Label extends Component {
 
     return (
       <li className="label">
-        <img src={this.props.icon} alt="Goal 2 icon" className="label__icon" />
-        <span className="label__order">{this.props.order}</span>
-        <span className="label__title">{this.props.title}</span>
-        <div className="label__buttons">
+        <img src={this.props.icon} alt="Goal 2 icon" className={"label__icon grayedout_" + this.props.hoveredOver} />
+        <span className={"label__order grayedout_" + this.props.hoveredOver}>{this.props.order}</span>
+        <span className={"label__title grayedout_" + this.props.hoveredOver}>{this.props.title}</span>
+        <div className={"label__buttons grayedout_" + this.props.hoveredOver}>
           {buttons}
         </div>
       </li>
