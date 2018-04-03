@@ -104,8 +104,12 @@ function name2color(name) {
   return colorMap[name.match(/[0-9]+(?=\.)/)[0]];
 }
 
-const weightScale = scaleThreshold()
-  .domain([-2.5, -1.5, -0.5, 0.5, 1.5, 2.5])
+const firstOrderWeightScale = scaleThreshold()
+  .domain([0])
+  .range([-3, 3]);
+
+const higherOrderWeightScale = scaleThreshold()
+  .domain([1 / 7, 2 / 7, 3 / 7, 4 / 7, 5 / 7, 6 / 7])
   .range([-3, -2, -1, 0, 1, 2, 3]);
 
 export default class Donut extends Component {
@@ -174,17 +178,19 @@ export default class Donut extends Component {
             output.set(n, {
               realWeight: output.get(n).realWeight + x,
               weight: output.get(n).weight + Math.abs(x),
-              kColor: output.get(n).kColor + v.realWeight,
-              nColor: output.get(n).nColor + 1,
+              ePos: output.get(n).ePos,
+              eNeg: output.get(n).eNeg,
             });
           } else {
             output.set(n, {
               realWeight: x,
               weight: Math.abs(x),
-              kColor: v.realWeight,
-              nColor: 1,
+              ePos: 0,
+              eNeg: 0,
             });
           }
+          if (x > 0) output.get(n).ePos += x;
+          else output.get(n).eNeg += Math.abs(x);
         });
       });
       weights = output;
@@ -201,7 +207,11 @@ export default class Donut extends Component {
       connections: [],
     };
     weights.forEach((v, k) => {
-      ret.connections.push({ ...v, name: k, color: v.kColor / v.nColor });
+      ret.connections.push({ 
+        ...v,
+        name: k,
+        color: higherOrderWeightScale(v.ePos / (v.ePos + v.eNeg)),
+      });
     });
 
     return ret;
@@ -302,7 +312,7 @@ export default class Donut extends Component {
 
     firstSlice.append('path')
         .attr('d', coolArc(firstRadius, thickness))
-        .attr('class', d => `fill_${weightScale(d.data.weight)}`)
+        .attr('class', d => `fill_${firstOrderWeightScale(d.data.weight)}`)
         .on('mouseover', (d) => {
           this.setState({hoveredOver: d.data.name})
           tooltip
@@ -346,9 +356,9 @@ export default class Donut extends Component {
     const secondArc = this.donuts.selectAll('g.arc--second')
       .data(coolPie(secondOrderData.connections));
 
-    const secondThickness = (
+    const secondThickness = ((
       secondOrderData.realThickness[0] + (secondOrderData.realThickness[1] / 2)
-      ) / 20;
+      ) / 30) + 20;
 
     const secondSlice = secondArc.enter()
       .append('g')
@@ -356,7 +366,7 @@ export default class Donut extends Component {
 
     secondSlice.append('path')
         .attr('d', coolArc(secondRadius, secondThickness))
-        .attr('class', d => `fill_${weightScale(d.data.color)}`)
+        .attr('class', d => `fill_${d.data.color}`)
         .on('mouseover', (d) => {
           this.setState({hoveredOver: d.data.name})
           tooltip
