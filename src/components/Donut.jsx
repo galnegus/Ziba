@@ -1,7 +1,7 @@
 /* eslint indent: 0 */
 
 import React, { Component } from 'react';
-import { select, json, pie, arc, scaleThreshold, scaleBand , event} from 'd3';
+import { select, json, pie, arc, scaleThreshold, scaleBand, event } from 'd3';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/fontawesome-free-solid';
 import Legend from './Legend';
@@ -115,7 +115,7 @@ const higherOrderWeightScale = scaleThreshold()
 export default class Donut extends Component {
   constructor(props) {
     super(props);
-    this.state = { colorblind: false, clicked: null, hoveredOver:null };
+    this.state = { colorblind: false, clicked: null, hoveredOver: '' };
 
     this.colorblindToggleHandler = this.colorblindToggleHandler.bind(this);
     this.backHandler = this.backHandler.bind(this);
@@ -123,6 +123,8 @@ export default class Donut extends Component {
   }
 
   componentDidMount() {
+    this.tooltip = select(this.tooltipRef);
+
     this.svg = select(this.svgRef)
         .attr('width', width)
         .attr('height', height)
@@ -207,7 +209,7 @@ export default class Donut extends Component {
       connections: [],
     };
     weights.forEach((v, k) => {
-      ret.connections.push({ 
+      ret.connections.push({
         ...v,
         name: k,
         color: higherOrderWeightScale(v.ePos / (v.ePos + v.eNeg)),
@@ -228,6 +230,27 @@ export default class Donut extends Component {
   labelButtonHandler(e) {
     this.hideNodes();
     this.showNode(e.target.innerText);
+  }
+
+  showTooltip(html, highlightLabelName = null) {
+    // avoids tooltip showing up when it's transitioning back to overview
+    if (this.state.clicked === null) return;
+
+    if (highlightLabelName) this.setState({ hoveredOver: highlightLabelName });
+    this.tooltip
+      .style('visibility', 'visible')
+      .html(html);
+  }
+
+  moveTooltip(x, y) {
+    this.tooltip
+      .style('left', `${x}px`)
+      .style('top', `${y}px`);
+  }
+
+  hideTooltip() {
+    this.setState({ hoveredOver: '' });
+    this.tooltip.style('visibility', 'hidden');
   }
 
   createOverview() {
@@ -266,6 +289,7 @@ export default class Donut extends Component {
         .attr('fill', d => name2color(d.name));
 
     node.append('text')
+        .classed('node__name', true)
         .attr('dy', '.35em')
         .attr('x', 30)
         .each((d) => { d.x = 30; })
@@ -279,6 +303,7 @@ export default class Donut extends Component {
         .attr('text-anchor', 'end');
 
     node.append('text')
+        .classed('node__title', true)
         .attr('dy', '.35em')
         .attr('x', 75)
         .text(d => d['Short Description'])
@@ -314,22 +339,14 @@ export default class Donut extends Component {
         .attr('d', coolArc(firstRadius, thickness))
         .attr('class', d => `fill_${firstOrderWeightScale(d.data.weight)}`)
         .on('mouseover', (d) => {
-          this.setState({hoveredOver: d.data.name})
-          tooltip
-            .style('visibility', 'visible')
-            .style('left', event.pageX + 'px')
-            .style('top', event.pageY + 'px')
-            .html(this.nodeByName.get(d.data.name)["Short Description"] + "<br> " +" weight = " + d.data.weight);
+          this.showTooltip(`${this.nodeByName.get(d.data.name)['Short Description']}<br>weight = ${d.data.weight}`, d.data.name);
         })
-        .on("mouseout", (d) => {
-            this.setState({hoveredOver: null})
-            tooltip.style("visibility", "hidden");
-          })
-
-    var tooltip = select("body")
-        .append("div")
-        .attr('class', 'tooltip')
-        // .style("opacity", 10);
+        .on('mousemove', () => {
+          this.moveTooltip(event.pageX, event.pageY);
+        })
+        .on('mouseout', () => {
+          this.hideTooltip();
+        });
 
     firstSlice.append('text')
         .attr('transform', (d) => {
@@ -368,17 +385,14 @@ export default class Donut extends Component {
         .attr('d', coolArc(secondRadius, secondThickness))
         .attr('class', d => `fill_${d.data.color}`)
         .on('mouseover', (d) => {
-          this.setState({hoveredOver: d.data.name})
-          tooltip
-            .style('visibility', 'visible')
-            .style('left', event.pageX + 'px')
-            .style('top', event.pageY + 'px')
-            .html("Name??? <br> Real weight = " + d.data.realWeight); // better label?
+          this.showTooltip(`${this.nodeByName.get(d.data.name)['Short Description']}<br>weight = ${d.data.realWeight}`, d.data.name);
         })
-        .on("mouseout", (d) => {
-            this.setState({hoveredOver: null})
-            tooltip.style("visibility", "hidden");
-          })
+        .on('mousemove', () => {
+          this.moveTooltip(event.pageX, event.pageY);
+        })
+        .on('mouseout', () => {
+          this.hideTooltip();
+        });
 
     secondSlice.append('text')
         .attr('transform', (d) => {
@@ -465,18 +479,15 @@ export default class Donut extends Component {
       .transition()
       .attr('r', 40);
 
-    const selectedNode = this.svg.select(`#node-${sanitizeSelector(nodeName)} circle`)  ;
-    selectedNode.on('mouseover', (d) => {
-          tooltip
-            .style('visibility', 'visible')
-            .style('left', event.pageX + 'px')
-            .style('top', event.pageY + 'px')
-            .html(d["Short Description"] + "<br> First ordet net influence = " + this.impact[nodeName]);
-                                          // + "<br> Second ordet net influence = " + target.weight + target.weight * (1/2) * this.impact[nodeName]);???
-        })
-        .on("mouseout", (d) => {
-            tooltip.style("visibility", "hidden");
-          })
+    this.svg.selectAll(`#node-${sanitizeSelector(nodeName)} circle, #node-${sanitizeSelector(nodeName)} .node__name`)
+      .on('mouseover', (d) => {
+        this.showTooltip(`${d['Short Description']}<br> First ordet net influence = ${this.impact[nodeName]}`);
+          // + "<br> Second ordet net influence = " + target.weight + target.weight * (1/2) * this.impact[nodeName]);???
+      }).on('mousemove', () => {
+        this.moveTooltip(event.pageX, event.pageY);
+      }).on('mouseout', () => {
+        this.hideTooltip();
+      });
 
     this.svg.select(`#node-${sanitizeSelector(nodeName)} text`)
       .transition()
@@ -489,11 +500,6 @@ export default class Donut extends Component {
         center: true,
         origin: (link.source.name === nodeName ? 'source' : 'target'),
       })(link));
-
-    var tooltip = select("body")
-      .append("div")
-      .attr('class', 'tooltip')
-      // .style("opacity", 10);
   }
 
   hideNodes() {
@@ -509,6 +515,11 @@ export default class Donut extends Component {
     this.svg.select(`#node-${sanitizeSelector(d.name)} circle`)
       .transition()
       .attr('r', d2 => this.impact[d2.name] / 2);
+
+    this.svg.selectAll(`#node-${sanitizeSelector(d.name)} circle, #node-${sanitizeSelector(d.name)} .node__name`)
+      .on('mouseover', null)
+      .on('mousemove', null)
+      .on('mouseout', null);
 
     // TODO: Fix
     this.svg.select(`#node-${sanitizeSelector(d.name)} text`)
@@ -535,6 +546,7 @@ export default class Donut extends Component {
         </div>
         <Legend handler={this.colorblindToggleHandler} colorblind={this.state.colorblind} />
         <Labels handler={this.labelButtonHandler} hoveredOver={this.state.hoveredOver} />
+        <div className="tooltip" id="tooltip" ref={(tooltip) => { this.tooltipRef = tooltip; }} />
       </div>
     );
   }

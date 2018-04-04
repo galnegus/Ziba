@@ -1,32 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class Label extends Component {
-  render() {
-    const buttons = [];
-    this.props.buttons.forEach((buttonLabel) => {
-      buttons.push((
-        <button
-          className="label__button"
-          onClick={this.props.handler}
-          key={buttonLabel}
-        >
-          {buttonLabel}
-        </button>
-      ));
-    });
+function Label({
+  buttons, icon, order, title, handler, hoveredOver,
+}) {
+  const buttonList = [];
+  buttons.forEach((buttonLabel) => {
+    let hoveredClass = '';
+    if (buttonLabel === hoveredOver) hoveredClass = ' label__button--hovered';
+    buttonList.push((
+      <button
+        className={`label__button${hoveredClass}`}
+        onClick={handler}
+        key={buttonLabel}
+      >
+        {buttonLabel}
+      </button>
+    ));
+  });
 
-    return (
-      <li className="label">
-        <img src={this.props.icon} alt="Goal 2 icon" className={"label__icon grayedout_" + this.props.hoveredOver} />
-        <span className={"label__order grayedout_" + this.props.hoveredOver}>{this.props.order}</span>
-        <span className={"label__title grayedout_" + this.props.hoveredOver}>{this.props.title}</span>
-        <div className={"label__buttons grayedout_" + this.props.hoveredOver}>
-          {buttons}
-        </div>
-      </li>
-    );
-  }
+  return (
+    <li className={`label grayedout_${hoveredOver}`}>
+      <img src={icon} alt="Goal 2 icon" className="label__icon" />
+      <span className="label__order grayedout_">{order}</span>
+      <span className="label__title grayedout_">{title}</span>
+      <div className="label__buttons grayedout_">
+        {buttonList}
+      </div>
+    </li>
+  );
 }
 
 Label.propTypes = {
@@ -38,6 +40,7 @@ Label.propTypes = {
   ]).isRequired,
   title: PropTypes.string.isRequired,
   handler: PropTypes.func.isRequired,
+  hoveredOver: PropTypes.string.isRequired,
 };
 
 export default Label;
