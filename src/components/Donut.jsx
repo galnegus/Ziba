@@ -356,10 +356,7 @@ export default class Donut extends Component {
 
     const thickness = this.impact[nodeName];
 
-    firstSlice.append('path')
-        .attr('d', coolArc(firstRadius, thickness))
-        .attr('class', d => `fill_${firstOrderWeightScale(d.data.weight)}`)
-        .on('mouseover', (d) => {
+    firstSlice.on('mouseover', (d) => {
           this.showTooltip({
             name: d.data.name,
             title: this.nodeByName.get(d.data.name)['Short Description'],
@@ -373,6 +370,10 @@ export default class Donut extends Component {
         .on('mouseout', () => {
           this.hideTooltip();
         });
+
+    firstSlice.append('path')
+        .attr('d', coolArc(firstRadius, thickness))
+        .attr('class', d => `fill_${firstOrderWeightScale(d.data.weight)}`);
 
     firstSlice.append('text')
         .attr('transform', (d) => {
@@ -407,10 +408,7 @@ export default class Donut extends Component {
       .append('g')
         .classed('arc arc--second', true);
 
-    secondSlice.append('path')
-        .attr('d', coolArc(secondRadius, secondThickness))
-        .attr('class', d => `fill_${d.data.color}`)
-        .on('mouseover', (d) => {
+    secondSlice.on('mouseover', (d) => {
           this.showTooltip({
             name: d.data.name,
             title: this.nodeByName.get(d.data.name)['Short Description'],
@@ -424,6 +422,10 @@ export default class Donut extends Component {
         .on('mouseout', () => {
           this.hideTooltip();
         });
+
+    secondSlice.append('path')
+        .attr('d', coolArc(secondRadius, secondThickness))
+        .attr('class', d => `fill_${d.data.color}`);
 
     secondSlice.append('text')
         .attr('transform', (d) => {
