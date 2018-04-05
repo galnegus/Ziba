@@ -1,7 +1,7 @@
 /* eslint indent: 0 */
 
 import React, { Component } from 'react';
-import { select, json, pie, arc, scaleThreshold, scaleBand, event } from 'd3';
+import { select, json, pie, arc, scaleThreshold, scaleBand, event, easePolyOut, hsl, rgb, lab, hcl, cubehelix } from 'd3';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/fontawesome-free-solid';
 import Legend from './Legend';
@@ -9,10 +9,12 @@ import Labels from './Labels';
 import logo from '../assets/logo-vertical.svg';
 import './Donut.css';
 
-const width = 850;
+const width = 950;
 const height = 900;
 const firstRadius = 200;
 const secondRadius = 300;
+
+const transitionDuration = 1000;
 
 const angle = scaleBand()
   .range([0, 360]);
@@ -232,14 +234,24 @@ export default class Donut extends Component {
     this.showNode(e.target.innerText);
   }
 
-  showTooltip(html, highlightLabelName = null) {
+  showTooltip({ name, title, weight, weightColorClass }) {
     // avoids tooltip showing up when it's transitioning back to overview
     if (this.state.clicked === null) return;
 
-    if (highlightLabelName) this.setState({ hoveredOver: highlightLabelName });
+    this.setState({ hoveredOver: name });
     this.tooltip
-      .style('visibility', 'visible')
-      .html(html);
+      .classed('tooltip--visible', true);
+    this.tooltip
+      .select('.tooltip__name')
+        .style('color', name2color(name))
+        .html(name);
+    this.tooltip
+      .select('.tooltip__title')
+        .html(title);
+    this.tooltip
+      .select('.tooltip__weight-value')
+        .classed(weightColorClass, true)
+        .html(weight);
   }
 
   moveTooltip(x, y) {
@@ -250,7 +262,13 @@ export default class Donut extends Component {
 
   hideTooltip() {
     this.setState({ hoveredOver: '' });
-    this.tooltip.style('visibility', 'hidden');
+    this.tooltip
+        .classed('tooltip--visible', false)
+      .select('.tooltip__weight-value')
+        .attr('class', 'tooltip__weight-value');
+    this.tooltip
+      .selectAll('.tooltip__name')
+        .style('color', null);
   }
 
   createOverview() {
@@ -286,19 +304,19 @@ export default class Donut extends Component {
 
     node.append('circle')
         .attr('r', d => this.impact[d.name] / 2)
-        .attr('fill', d => name2color(d.name));
+        .style('fill', d => name2color(d.name));
 
     node.append('text')
         .classed('node__name', true)
         .attr('dy', '.35em')
         .attr('x', 30)
-        .each((d) => { d.x = 30; })
+        .each((d) => { d.nameX = 30; })
         .text(d => d.name)
-        .style('font-weight', 'bold')
+        .style('font-weight', '600')
         .style('fill', d => name2color(d.name))
       .filter(d => (angle(d.name) + 90) % 360 > 180) // flipped
         .attr('x', -30)
-        .each((d) => { d.x = -30; })
+        .each((d) => { d.nameX = -30; })
         .attr('transform', 'rotate(-180)')
         .attr('text-anchor', 'end');
 
@@ -306,13 +324,16 @@ export default class Donut extends Component {
         .classed('node__title', true)
         .attr('dy', '.35em')
         .attr('x', 75)
+        .each((d) => { d.titleX = 75; })
         .text(d => d['Short Description'])
         .style('fill', d => name2color(d.name))
-        .style('font-size', '0.7em')
+        .style('font-size', '0.8em')
+        .style('font-weight', '600')
       .filter(d => (angle(d.name) + 90) % 360 > 180) // flipped
         .attr('x', -75)
+        .each((d) => { d.titleX = -75; })
         .attr('transform', 'rotate(-180)')
-        .style('text-anchor', 'end');
+        .attr('text-anchor', 'end');
   }
 
 
@@ -339,7 +360,12 @@ export default class Donut extends Component {
         .attr('d', coolArc(firstRadius, thickness))
         .attr('class', d => `fill_${firstOrderWeightScale(d.data.weight)}`)
         .on('mouseover', (d) => {
-          this.showTooltip(`${this.nodeByName.get(d.data.name)['Short Description']}<br>weight = ${d.data.weight}`, d.data.name);
+          this.showTooltip({
+            name: d.data.name,
+            title: this.nodeByName.get(d.data.name)['Short Description'],
+            weight: d.data.weight,
+            weightColorClass: `color_${firstOrderWeightScale(d.data.weight)}`,
+          });
         })
         .on('mousemove', () => {
           this.moveTooltip(event.pageX, event.pageY);
@@ -361,7 +387,7 @@ export default class Donut extends Component {
         .attr('x', (thickness / 2) + 10)
         .text(d => d.data.name)
         .style('font-size', '0.9em')
-        .style('font-weight', 'bold')
+        .style('font-weight', '600')
         //.style('fill', d => name2color(d.data.name))
       .filter(d => ((d.startAngle + d.endAngle) / 2 > (Math.PI / 2) && (d.startAngle + d.endAngle) / 2 < (3 * Math.PI) / 2))
         .attr('x', -((thickness / 2) + 10))
@@ -385,7 +411,12 @@ export default class Donut extends Component {
         .attr('d', coolArc(secondRadius, secondThickness))
         .attr('class', d => `fill_${d.data.color}`)
         .on('mouseover', (d) => {
-          this.showTooltip(`${this.nodeByName.get(d.data.name)['Short Description']}<br>weight = ${d.data.realWeight}`, d.data.name);
+          this.showTooltip({
+            name: d.data.name,
+            title: this.nodeByName.get(d.data.name)['Short Description'],
+            weight: d.data.realWeight,
+            weightColorClass: `color_${d.data.color}`,
+          });
         })
         .on('mousemove', () => {
           this.moveTooltip(event.pageX, event.pageY);
@@ -408,10 +439,19 @@ export default class Donut extends Component {
         .text(d => d.data.name)
         .style('font-size', '0.9em')
         .style('text-anchor', 'middle')
-        //.style('font-weight', 'bold')
+        //.style('font-weight', '600')
         //.style('fill', d => name2color(d.data.name))
       .filter(d => ((d.startAngle + d.endAngle) / 2 > (Math.PI / 2) && (d.startAngle + d.endAngle) / 2 < (3 * Math.PI) / 2))
         .attr('x', -((secondThickness / 2) + 30))
+
+    if (this.state.clicked === null) {
+      this.donuts.selectAll('g.arc')
+        .style('fill-opacity', 0)
+        .transition()
+          .duration(transitionDuration)
+          .ease(easePolyOut.exponent(5))
+          .style('fill-opacity', 1);
+    }
   }
 
   destroyDonut() {
@@ -419,30 +459,38 @@ export default class Donut extends Component {
       .selectAll('g.arc')
       .classed('destroy', true)
       .transition()
-        .delay(500)
+        .delay(transitionDuration / 2)
       .remove();
   }
 
   handleMouseOver(d) {
+    const node = this.svg.select(`#node-${sanitizeSelector(d.name)}`);
+
+    node
+      .selectAll('circle, .node__name')
+        .style('fill', d2 => hsl(name2color(d2.name)).brighter(1.25));
+
+    if (this.state.clicked !== null) return;
+    this.setState({ hoveredOver: d.name });
+
     this.svg.classed('hover-network', true);
-
-    this.svg.select(`#node-${sanitizeSelector(d.name)}`)
-      .classed('hovered', true);
-
+    node.classed('hovered', true);
     d.connections.forEach((c) => {
       this.svg.select(`#node-${sanitizeSelector(c.name)}`)
         .classed('hovered', true);
     });
-
     this.svg.selectAll(`.source-${sanitizeSelector(d.name)}`)
       .classed('hovered', true);
   }
 
   handleMouseOut(d) {
     this.svg.classed('hover-network', false);
+    this.setState({ hoveredOver: '' });
 
     this.svg.select(`#node-${sanitizeSelector(d.name)}`)
-      .classed('hovered', false);
+        .classed('hovered', false)
+      .selectAll('circle, .node__name')
+        .style('fill', d2 => hsl(name2color(d2.name)));
 
     d.connections.forEach((c) => {
       this.svg.select(`#node-${sanitizeSelector(c.name)}`)
@@ -454,9 +502,14 @@ export default class Donut extends Component {
   }
 
   handleClick(d) {
-    if (this.svg.classed('click-network')) return;
-    if (this.state.clicked === d) return;
-    else if (this.state.clicked !== null) this.unclick();
+    if (this.svg.classed('click-network')) {
+      if (this.state.clicked === d) this.unclick();
+      return;
+    } else if (this.state.clicked === d) {
+      return;
+    } else if (this.state.clicked !== null) {
+      this.unclick();
+    }
 
     this.showNode(d.name);
   }
@@ -464,22 +517,28 @@ export default class Donut extends Component {
   unclick() {
     this.destroyDonut();
     this.hideNodes();
+    this.hideTooltip();
   }
 
-  showNode(nodeName) {
-    this.setState({ clicked: this.nodeByName.get(nodeName) });
-    this.createDonut(nodeName);
+  showNode(name) {
+    this.createDonut(name);
+    this.setState({ clicked: this.nodeByName.get(name) });
     this.svg.classed('click-network', true);
-    this.svg.select(`#node-${sanitizeSelector(nodeName)}`)
+    const node = this.svg.select(`#node-${sanitizeSelector(name)}`);
+    node
       .classed('clicked', true)
       .transition()
-      .attr('transform', `${(angle(nodeName) + 90) % 360 > 180 ? `rotate(${180})` : ''}translate(0,0)`);
+      .duration(transitionDuration)
+      .ease(easePolyOut.exponent(5))
+      .attr('transform', `${(angle(name) + 90) % 360 > 180 ? `rotate(${180})` : ''}translate(0,0)`);
 
-    this.svg.select(`#node-${sanitizeSelector(nodeName)} circle`)
+    node.select('circle')
       .transition()
+      .duration(transitionDuration)
+      .ease(easePolyOut.exponent(5))
       .attr('r', 40);
-
-    this.svg.selectAll(`#node-${sanitizeSelector(nodeName)} circle, #node-${sanitizeSelector(nodeName)} .node__name`)
+/*
+    node.selectAll('circle, .node__name')
       .on('mouseover', (d) => {
         this.showTooltip(`${d['Short Description']}<br> First ordet net influence = ${this.impact[nodeName]}`);
           // + "<br> Second ordet net influence = " + target.weight + target.weight * (1/2) * this.impact[nodeName]);???
@@ -488,17 +547,34 @@ export default class Donut extends Component {
       }).on('mouseout', () => {
         this.hideTooltip();
       });
+*/
+    const nodeName = node.select('.node__name');
+    const nodeTitle = node.select('.node__title');
 
-    this.svg.select(`#node-${sanitizeSelector(nodeName)} text`)
-      .transition()
-      .attr('x', 0)
-      .style('text-anchor', 'middle');
+    const sign = nodeTitle.data()[0].titleX > 0 ? -1 : 1;
+    const namePos = sign * (nodeName.node().getBBox().width / 2);
+    const titlePos = sign * (nodeTitle.node().getBBox().width / 2);
 
-    this.svg.selectAll(`.source-${sanitizeSelector(nodeName)}`)
+    nodeName
       .transition()
+      .duration(transitionDuration)
+      .ease(easePolyOut.exponent(5))
+      .attr('x', namePos);
+
+    nodeTitle
+      .transition()
+      .duration(transitionDuration)
+      .ease(easePolyOut.exponent(5))
+      .attr('x', titlePos)
+      .attr('y', -60);
+
+    this.svg.selectAll(`.source-${sanitizeSelector(name)}`)
+      .transition()
+      .duration(transitionDuration)
+      .ease(easePolyOut.exponent(5))
       .attr('d', link => curve({
         center: true,
-        origin: (link.source.name === nodeName ? 'source' : 'target'),
+        origin: (link.source.name === name ? 'source' : 'target'),
       })(link));
   }
 
@@ -507,28 +583,48 @@ export default class Donut extends Component {
     const d = this.state.clicked;
 
     this.svg.classed('click-network', false);
-    this.svg.select(`#node-${sanitizeSelector(d.name)}`)
+    const node = this.svg.select(`#node-${sanitizeSelector(d.name)}`)
+
+    node
       .classed('clicked', false)
       .transition()
+      .duration(transitionDuration)
+      .ease(easePolyOut.exponent(5))
       .attr('transform', `rotate(${angle(d.name)})translate(${firstRadius},0)`);
 
-    this.svg.select(`#node-${sanitizeSelector(d.name)} circle`)
+    node.select('circle')
       .transition()
+      .duration(transitionDuration)
+      .ease(easePolyOut.exponent(5))
       .attr('r', d2 => this.impact[d2.name] / 2);
-
-    this.svg.selectAll(`#node-${sanitizeSelector(d.name)} circle, #node-${sanitizeSelector(d.name)} .node__name`)
+/*
+    node.selectAll('circle, .node__name')
       .on('mouseover', null)
       .on('mousemove', null)
       .on('mouseout', null);
-
+*/
     // TODO: Fix
-    this.svg.select(`#node-${sanitizeSelector(d.name)} text`)
+    node.select('.node__name')
       .transition()
-      .attr('x', d2 => d2.x)
+      .duration(transitionDuration)
+      .ease(easePolyOut.exponent(5))
+      .attr('x', d2 => d2.nameX)
       .style('text-anchor', null);
+
+    node.select('.node__title')
+      .transition()
+      .duration(transitionDuration)
+      .ease(easePolyOut.exponent(5))
+      .attr('x', d2 => d2.titleX)
+      .attr('y', 0)
+      //.style('font-size', '0.8em')
+      //.style('font-weight', '400')
+      //.style('text-anchor', null);
 
     this.svg.selectAll(`.source-${sanitizeSelector(d.name)}`)
       .transition()
+      .duration(500)
+      .ease(easePolyOut.exponent(5))
       .attr('d', link => curve()(link));
 
     this.setState({ clicked: null });
@@ -536,17 +632,26 @@ export default class Donut extends Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <div className={`wrapper${this.state.colorblind ? ' colorblind' : ''}`}>
         { /* <img className="logo" src={logo} alt="GLOBAL GOALS - For sustainable development" /> */ }
         <div className="svg-container">
-            <svg className={`${this.state.colorblind ? 'colorblind' : ''}`} ref={(svg) => { this.svgRef = svg; }} />
+            <svg ref={(svg) => { this.svgRef = svg; }} />
             <div className={`back-container ${this.state.clicked ? 'back-container--shown' : ''}`}>
               <FontAwesomeIcon icon={faArrowLeft} onClick={this.backHandler} />
             </div>
         </div>
-        <Legend handler={this.colorblindToggleHandler} colorblind={this.state.colorblind} />
+        <Legend handler={this.colorblindToggleHandler} colorblind={this.state.colorblind} visible={this.state.clicked !== null} />
         <Labels handler={this.labelButtonHandler} hoveredOver={this.state.hoveredOver} />
-        <div className="tooltip" id="tooltip" ref={(tooltip) => { this.tooltipRef = tooltip; }} />
+        <div className="tooltip" id="tooltip" ref={(tooltip) => { this.tooltipRef = tooltip; }}>
+          <div className="tooltip__name-container">
+            <span className="tooltip__name">12.2</span>
+            <span className="tooltip__title">Earth</span>
+          </div>
+          <div className="tooltip__weight-container">
+            <span className="tooltip__weight-label">Impact:</span>
+            <span className="tooltip__weight-value">5</span>
+          </div>
+        </div>
       </div>
     );
   }

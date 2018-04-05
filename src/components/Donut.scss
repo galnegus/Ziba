@@ -2,6 +2,8 @@
 
 @import 'colors.scss';
 
+$transitionDuration: 1000ms;
+
 .logo {
   position: absolute;
   top: 50px;
@@ -71,21 +73,28 @@
 }
 
 .node circle, .node text, .link {
-  transition: fill-opacity 500ms cubic-bezier(0.23, 1, 0.32, 1),
-    fill 500ms cubic-bezier(0.23, 1, 0.32, 1), 
-    stroke-opacity 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: fill-opacity $transitionDuration / 2 cubic-bezier(0.23, 1, 0.32, 1),
+    fill $transitionDuration / 2 cubic-bezier(0.23, 1, 0.32, 1), 
+    stroke-opacity $transitionDuration / 2 cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .node.clicked {
-  text {
+  text.node__name {
     fill: #fff !important;
+  }
+
+  cursor: pointer;
+}
+
+.node:hover {
+  circle {
   }
 }
 
 .donuts .arc {
   path, text {
-    transition: fill-opacity 500ms cubic-bezier(0.23, 1, 0.32, 1),
-      fill 500ms cubic-bezier(0.23, 1, 0.32, 1);
+    transition: fill-opacity $transitionDuration cubic-bezier(0.23, 1, 0.32, 1),
+      fill $transitionDuration cubic-bezier(0.23, 1, 0.32, 1);
   }
 }
 
@@ -129,9 +138,9 @@
   opacity: 0;
   visibility: hidden;
   
-  transition: color 500ms cubic-bezier(0.23, 1, 0.32, 1),
-    opacity 500ms cubic-bezier(0.23, 1, 0.32, 1),
-    visibility 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: color $transitionDuration cubic-bezier(0.23, 1, 0.32, 1),
+    opacity $transitionDuration cubic-bezier(0.23, 1, 0.32, 1),
+    visibility $transitionDuration cubic-bezier(0.23, 1, 0.32, 1);
 
   &:hover {
     color: #ccc;
@@ -149,13 +158,64 @@
 }
 
 .tooltip {
-  background-color: lightblue;
-  font-weight: bold;
-  padding: 5px;
-  border-radius: 9px;
+  //transition: opacity 400ms cubic-bezier(0.23, 1, 0.32, 1);
+  background-color: #fff;
+  font-size: 0.9em;
+  padding: 7px 12px;
+  border-radius: 3px;
   position: absolute;
   display: inline-block;
-  margin-top: -50px;
+  margin-top: -20px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transform: translate(-50%, -100%);
+  text-align: left;
+
   visibility: hidden;
+  opacity: 0;
+
+  &.tooltip--visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+  }
+
+  .tooltip__name-container {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+  }
+
+  .tooltip__name {
+    font-weight: 600;
+    margin-right: 5px;
+  }
+
+  .tooltip__title {
+    font-weight: 600;
+  }
+
+  .tooltip__weight-container {
+    width: 100%;
+    text-align: center;
+    font-size: 0.9em;
+    padding-top: 5px;
+  }
+
+  .tooltip__weight-label {
+    margin-right: 5px;
+  }
+
+  .tooltip__weight-value {
+    font-weight: 600;
+  }
 }
 

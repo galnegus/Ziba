@@ -19,6 +19,27 @@
 .fill_3 {
   fill: #198C19; }
 
+.color_-3 {
+  color: #CC0000; }
+
+.color_-2 {
+  color: #D44C00; }
+
+.color_-1 {
+  color: #DC9800; }
+
+.color_0 {
+  color: #E5E500; }
+
+.color_1 {
+  color: #A1C708; }
+
+.color_2 {
+  color: #5DA910; }
+
+.color_3 {
+  color: #198C19; }
+
 .hover-network .stroke_-3, .click-network .stroke_-3 {
   stroke: #CC0000; }
 
@@ -60,6 +81,27 @@
 
 .colorblind .fill_3 {
   fill: #4646C7; }
+
+.colorblind .color_-3 {
+  color: #7F0000; }
+
+.colorblind .color_-2 {
+  color: #9C413B; }
+
+.colorblind .color_-1 {
+  color: #BA8376; }
+
+.colorblind .color_0 {
+  color: #D8C5B2; }
+
+.colorblind .color_1 {
+  color: #A79AB9; }
+
+.colorblind .color_2 {
+  color: #7670C0; }
+
+.colorblind .color_3 {
+  color: #4646C7; }
 
 .colorblind .hover-network .stroke_-3, .colorblind .click-network .stroke_-3 {
   stroke: #7F0000; }

@@ -43,6 +43,34 @@ $colorblind_3: #4646C7;
   fill: $color_3;
 }
 
+.color_-3 {
+  color: $color_-3;
+}
+
+.color_-2 {
+  color: $color_-2;
+}
+
+.color_-1 {
+  color: $color_-1;
+}
+
+.color_0 {
+  color: $color_0;
+}
+
+.color_1 {
+  color: $color_1;
+}
+
+.color_2 {
+  color: $color_2;
+}
+
+.color_3 {
+  color: $color_3;
+}
+
 // stroke
 .hover-network, .click-network {
   .stroke_-3 {
@@ -102,6 +130,34 @@ $colorblind_3: #4646C7;
 
   .fill_3 {
     fill: $colorblind_3;
+  }
+
+  .color_-3 {
+    color: $colorblind_-3;
+  }
+
+  .color_-2 {
+    color: $colorblind_-2;
+  }
+
+  .color_-1 {
+    color: $colorblind_-1;
+  }
+
+  .color_0 {
+    color: $colorblind_0;
+  }
+
+  .color_1 {
+    color: $colorblind_1;
+  }
+
+  .color_2 {
+    color: $colorblind_2;
+  }
+
+  .color_3 {
+    color: $colorblind_3;
   }
 
   // stroke
