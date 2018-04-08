@@ -10,6 +10,35 @@
   border-left: 1px solid #e6e6e6;
 }
 
+.about {
+  text-align: center;
+
+  a {
+    color: #00689D;
+    text-decoration: none;
+    transition: color 200ms cubic-bezier(0.23, 1, 0.32, 1);
+    font-size: 0.9em;
+
+    margin-bottom: 1.5em;
+    border-bottom: 1px solid lighten(#00689D, 20%);
+    display: inline-block;
+
+    &:hover {
+      color: lighten(#00689D, 10%);
+    }
+
+    &:active {
+      color: lighten(#00689D, 20%);
+    }
+  }
+}
+
+.about__label {
+  margin-left: 0.5em;
+  font-weight: 600;
+  //text-transform: uppercase;
+}
+
 .labels {
   list-style-type: none;
   width: 300px;

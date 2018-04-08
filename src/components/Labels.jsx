@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faInfoCircle from '@fortawesome/fontawesome-free-solid/faInfoCircle';
 import Label from './Label';
 import './Labels.css';
 import legendGoal1 from '../assets/legend_goal_1.svg';
@@ -23,6 +25,12 @@ import legendGoal17 from '../assets/legend_goal_17.svg';
 function Labels({ handler, hoveredOver }) {
   return (
     <div className="labels-container">
+      <div className="about">
+        <a href="about.html">
+          <FontAwesomeIcon icon={faInfoCircle} />
+          <span className="about__label">About the project</span>
+        </a>
+      </div>
       <ul className="labels">
         <Label
           order="1"
