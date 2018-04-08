@@ -1,7 +1,7 @@
 /* eslint indent: 0 */
 
 import React, { Component } from 'react';
-import { select, json, pie, arc, scaleThreshold, scaleBand, event, easePolyOut, hsl, rgb, lab, hcl, cubehelix } from 'd3';
+import { select, json, pie, arc, scaleThreshold, scaleBand, event, easePolyOut, hsl } from 'd3';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/fontawesome-free-solid';
 import Legend from './Legend';
@@ -240,16 +240,16 @@ export default class Donut extends Component {
 
     this.setState({ hoveredOver: name });
     this.tooltip
-      .classed('tooltip--visible', true);
+      .classed('ziba-tooltip--visible', true);
     this.tooltip
-      .select('.tooltip__name')
+      .select('.ziba-tooltip__name')
         .style('color', name2color(name))
         .html(name);
     this.tooltip
-      .select('.tooltip__title')
+      .select('.ziba-tooltip__title')
         .html(title);
     this.tooltip
-      .select('.tooltip__weight-value')
+      .select('.ziba-tooltip__weight-value')
         .classed(weightColorClass, true)
         .html(weight);
   }
@@ -263,11 +263,11 @@ export default class Donut extends Component {
   hideTooltip() {
     this.setState({ hoveredOver: '' });
     this.tooltip
-        .classed('tooltip--visible', false)
-      .select('.tooltip__weight-value')
-        .attr('class', 'tooltip__weight-value');
+        .classed('ziba-tooltip--visible', false)
+      .select('.ziba-tooltip__weight-value')
+        .attr('class', 'ziba-tooltip__weight-value');
     this.tooltip
-      .selectAll('.tooltip__name')
+      .selectAll('.ziba-tooltip__name')
         .style('color', null);
   }
 
@@ -644,14 +644,14 @@ export default class Donut extends Component {
         </div>
         <Legend handler={this.colorblindToggleHandler} colorblind={this.state.colorblind} visible={this.state.clicked !== null} />
         <Labels handler={this.labelButtonHandler} hoveredOver={this.state.hoveredOver} />
-        <div className="tooltip" id="tooltip" ref={(tooltip) => { this.tooltipRef = tooltip; }}>
-          <div className="tooltip__name-container">
-            <span className="tooltip__name">12.2</span>
-            <span className="tooltip__title">Earth</span>
+        <div className="ziba-tooltip" id="tooltip" ref={(tooltip) => { this.tooltipRef = tooltip; }}>
+          <div className="ziba-tooltip__name-container">
+            <span className="ziba-tooltip__name">12.2</span>
+            <span className="ziba-tooltip__title">Earth</span>
           </div>
-          <div className="tooltip__weight-container">
-            <span className="tooltip__weight-label">Impact:</span>
-            <span className="tooltip__weight-value">5</span>
+          <div className="ziba-tooltip__weight-container">
+            <span className="ziba-tooltip__weight-label">Impact:</span>
+            <span className="ziba-tooltip__weight-value">5</span>
           </div>
         </div>
       </div>

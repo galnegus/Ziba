@@ -14,22 +14,9 @@
   text-align: center;
 
   a {
-    color: #00689D;
-    text-decoration: none;
-    transition: color 200ms cubic-bezier(0.23, 1, 0.32, 1);
     font-size: 0.9em;
-
     margin-bottom: 1.5em;
-    border-bottom: 1px solid lighten(#00689D, 20%);
     display: inline-block;
-
-    &:hover {
-      color: lighten(#00689D, 10%);
-    }
-
-    &:active {
-      color: lighten(#00689D, 20%);
-    }
   }
 }
 
@@ -46,33 +33,33 @@
   padding: 0;
 }
 
-.label {
+.target-label {
   display: flex;
   text-align: left;
   align-items: flex-start;
   margin: 7px 0;
 }
 
-.label__icon, .label__title, .label__buttons {
+.target-label__icon, .target-label__title, .target-label__buttons {
   //display: inline-block;
   //vertical-align: middle;
 }
 
-.label__icon {
+.target-label__icon {
   width: auto;
   height: 30px;
   min-width: 0;
   flex-shrink: 0;
 }
 
-.label__order {
+.target-label__order {
   flex-shrink: 0;
   padding-top: 4px;
   padding-left: 5px;
   font-weight: bold;
 }
 
-.label__title {
+.target-label__title {
   flex-grow: 1;
   padding-top: 7px;
   padding-left: 5px;
@@ -80,12 +67,12 @@
   font-size: 0.8em;
 }
 
-.label__buttons {
+.target-label__buttons {
   flex-shrink: 0;
   padding-top: 5px;
 }
 
-.label__button {
+.target-label__button {
   margin-right: 8px;
   &:last-of-type {
     margin-right: 0;
@@ -120,7 +107,7 @@
     outline: none;
   }
 
-  &.label__button--hovered {
+  &.target-label__button--hovered {
     color: #666;
     border-color: #aaa;
     background: #f6f6f6;

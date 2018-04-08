@@ -7,10 +7,10 @@ function Label({
   const buttonList = [];
   buttons.forEach((buttonLabel) => {
     let hoveredClass = '';
-    if (buttonLabel === hoveredOver) hoveredClass = ' label__button--hovered';
+    if (buttonLabel === hoveredOver) hoveredClass = ' target-label__button--hovered';
     buttonList.push((
       <button
-        className={`label__button${hoveredClass}`}
+        className={`target-label__button${hoveredClass}`}
         onClick={handler}
         key={buttonLabel}
       >
@@ -20,11 +20,11 @@ function Label({
   });
 
   return (
-    <li className={`label grayedout_${hoveredOver}`}>
-      <img src={icon} alt="Goal 2 icon" className="label__icon" />
-      <span className="label__order grayedout_">{order}</span>
-      <span className="label__title grayedout_">{title}</span>
-      <div className="label__buttons grayedout_">
+    <li className={`target-label grayedout_${hoveredOver}`}>
+      <img src={icon} alt="Goal 2 icon" className="target-label__icon" />
+      <span className="target-label__order grayedout_">{order}</span>
+      <span className="target-label__title grayedout_">{title}</span>
+      <div className="target-label__buttons grayedout_">
         {buttonList}
       </div>
     </li>

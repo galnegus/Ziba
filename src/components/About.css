@@ -1,0 +1,157 @@
+.App {
+    font-family: 'Source Sans Pro', sans-serif !important;
+    font-size: 16px !important;
+}
+
+#maintitle{
+  font-size: 40px;
+    font-family: sans-serif;
+}
+
+#subtitle{
+  font-size: 20px;
+    font-family: sans-serif;   
+}
+
+#navbar{
+  text-align:right;
+    font-size: 16px;
+  /*font-family: sans-serif;  */
+  color:black; 
+}
+
+.video-container {
+    background: #000;
+}
+
+.video-container .container {
+    padding: 0;
+}
+
+.embed-container { 
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0; overflow:
+    hidden;
+    max-width: 100%;
+} 
+.embed-container iframe, .embed-container object, .embed-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.demo {
+    padding-top: 40px;
+    padding-bottom: 60px;
+    text-align: center;
+    background: #f6f6f6;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    margin-bottom: 40px;
+}
+
+.demo a {
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.demo a .fa-external-link-alt {
+    font-size: 0.9em;
+    margin-right: 0.5em;
+}
+
+.container {
+    padding: 5px;
+    padding-bottom: 30px;
+}
+
+.header {
+
+}
+
+.header__image {
+    max-width: 340px;
+    margin-top: 20px;
+}
+
+.header__navbar {
+    line-height: 90px;
+}
+
+.header__navbar a {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.description-title {
+    margin-left: 200px;
+}
+
+.paragraph{
+    text-align:justify;
+}
+
+.image-background {
+    max-width:100%;
+    max-height:100%;
+}
+
+.image-mapping {
+    max-width:100%;
+    max-height:100%;   
+}
+
+.team {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.team h1 {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.team img {
+    margin: 0 auto;
+}
+
+.team__img-container {
+    text-align: center;
+    width: 100%;
+}
+
+.team__img-container img {
+    width: 175px;
+    height: auto;
+    border-radius: 50%;
+}
+
+.team__name {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+
+.team__email {
+    text-align: center;
+}
+
+.team__contributions {
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+@media (max-width: 767.98px) { 
+    .team__contributions {
+        display: inline-block;
+    }
+
+    .description-title {
+        margin-left: 0;
+        text-align: center;
+    }
+}

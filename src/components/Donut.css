@@ -134,7 +134,8 @@
 
 .wrapper {
   display: flex;
-  align-items: flex-start; }
+  align-items: flex-start;
+  text-align: center; }
 
 .svg-container {
   flex-grow: 1;
@@ -218,7 +219,7 @@
     opacity: 1;
     visibility: visible; }
 
-.tooltip {
+.ziba-tooltip {
   background-color: #fff;
   font-size: 0.9em;
   padding: 7px 12px;
@@ -231,33 +232,33 @@
   text-align: left;
   visibility: hidden;
   opacity: 0; }
-  .tooltip.tooltip--visible {
+  .ziba-tooltip.ziba-tooltip--visible {
     opacity: 1;
     visibility: visible; }
-  .tooltip::after {
+  .ziba-tooltip::after {
     content: " ";
     position: absolute;
     top: 100%;
-    /* At the bottom of the tooltip */
+    /* At the bottom of the ziba-tooltip */
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
     border-color: #fff transparent transparent transparent; }
-  .tooltip .tooltip__name-container {
+  .ziba-tooltip .ziba-tooltip__name-container {
     border-bottom: 1px solid #eee;
     padding-bottom: 5px; }
-  .tooltip .tooltip__name {
+  .ziba-tooltip .ziba-tooltip__name {
     font-weight: 600;
     margin-right: 5px; }
-  .tooltip .tooltip__title {
+  .ziba-tooltip .ziba-tooltip__title {
     font-weight: 600; }
-  .tooltip .tooltip__weight-container {
+  .ziba-tooltip .ziba-tooltip__weight-container {
     width: 100%;
     text-align: center;
     font-size: 0.9em;
     padding-top: 5px; }
-  .tooltip .tooltip__weight-label {
+  .ziba-tooltip .ziba-tooltip__weight-label {
     margin-right: 5px; }
-  .tooltip .tooltip__weight-value {
+  .ziba-tooltip .ziba-tooltip__weight-value {
     font-weight: 600; }

@@ -1,8 +1,25 @@
 .App {
-  text-align: center;
   background: #fff;
   color: #4a4a4a;
   font-family: 'Source Sans Pro', sans-serif;
+}
+
+
+a {
+  color: #00689D;
+  text-decoration: none;
+  transition: color 200ms cubic-bezier(0.23, 1, 0.32, 1);
+  border-bottom: 1px solid #339BD0 !important;
+}
+
+a:hover {
+  color: #339BD0;
+  text-decoration: none;
+}
+
+a:active {
+  color: #66CEFF;
+  text-decoration: none;
 }
 
 .App-logo {

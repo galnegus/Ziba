@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faInfoCircle from '@fortawesome/fontawesome-free-solid/faInfoCircle';
 import Label from './Label';
+import { Link } from 'react-router-dom';
 import './Labels.css';
 import legendGoal1 from '../assets/legend_goal_1.svg';
 import legendGoal2 from '../assets/legend_goal_2.svg';
@@ -26,10 +27,10 @@ function Labels({ handler, hoveredOver }) {
   return (
     <div className="labels-container">
       <div className="about">
-        <a href="about.html">
+        <Link to="about">
           <FontAwesomeIcon icon={faInfoCircle} />
           <span className="about__label">About the project</span>
-        </a>
+        </Link>
       </div>
       <ul className="labels">
         <Label
