@@ -230,7 +230,7 @@ export default class Donut extends Component {
   }
 
   labelButtonHandler(e) {
-    this.hideNodes();
+    if (this.state.clicked !== null) this.hideNodes();
     this.showNode(e.target.innerText);
   }
 

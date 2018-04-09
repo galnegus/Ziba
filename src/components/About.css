@@ -47,10 +47,6 @@
     padding-top: 40px;
     padding-bottom: 60px;
     text-align: center;
-    background: #f6f6f6;
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
-    margin-bottom: 40px;
 }
 
 .demo a {
@@ -86,8 +82,24 @@
     margin-left: 10px;
 }
 
+.description {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background: #fafafa;
+    border-bottom: 1px solid #E8E8E8;
+    border-top: 1px solid #E8E8E8;
+}
+
 .description-title {
     margin-left: 200px;
+}
+
+.description h3 {
+    margin-bottom: 1em;
+}
+
+.description p {
+    line-height: 1.7;
 }
 
 .paragraph{
@@ -105,12 +117,13 @@
 }
 
 .team {
-    margin-top: 80px;
+    margin-top: 60px;
+    margin-bottom: 80px;
     text-align: center;
 }
 
 .team h1 {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
     text-align: center;
 }
 
@@ -141,7 +154,8 @@
 }
 
 .team__contributions {
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+    margin-top: 20px;
     text-align: left;
 }
 

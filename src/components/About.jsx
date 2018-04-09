@@ -18,7 +18,7 @@ import './About.css';
 
 function About() {
   return (
-    <div class="about-wrapper">
+    <div className="about-wrapper">
       <div className="container1">
         <div className="container">
           <div className="row header" id="top">
@@ -30,7 +30,7 @@ function About() {
               />
             </div>
             <div className="col-md-6 header__navbar" id="navbar">
-              <p font color="black">
+              <p>
                 <a href="#demo">Get Started</a> |
                 <a href="#description">Description</a> |
                 <a href="#team">Our Team </a>
@@ -46,7 +46,7 @@ function About() {
                   <div className="embed-container">
                     <iframe
                       title="Ziba Video"
-                      src="https://www.youtube.com/embed/1xaSKNqOZJo"
+                      src="https://www.youtube.com/embed/nld6DBwYI3k"
                       frameBorder="0"
                       allowFullScreen
                     />
@@ -66,53 +66,57 @@ function About() {
           </div>
         </div>
       </div>
+      <div className="description">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-1" />
+            <div className="col-sm-12">
+              <h1 className="description-title">Description</h1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-1" />
+            <div className="col-sm-5">
+              <img className="image-background" alt="The 17 Agenda 2020 goals" src={img10} />
+            </div>
+            <div className="col-sm-5 paragraph" id="background">
+              <h3>Background</h3>
+              <p>
+                This project was proposed by the Stockholm Environmental Institute (SEI).
+                SEI is an international non-profit research organization working on environment and sustainable development issues.
+                This visualization is based on the data collected and compiled by the SEI about the United Nations Sustainable Development Goals.
+                The main purpose of this data is to make it possible to analyze the interactions between different Sustainable Development Goals.
+                Our visualization of this data set is intended to help researchers identify important connections and interactions between these goals.
+              </p>
+            </div>
+            <div className="col-sm-1" />
+          </div>
+          <div className="row">
+            <div className="col-sm-1" />
+            <div className="col-sm-6 paragraph">
+              <h3>Mapping</h3>
+              <p>
+                Our visualization features two main views, the overview and the detailed view.
+              </p>
+              <p>
+                The overview shows all the goals we have interaction data for.
+                The interactions between goals are shown as lines, where the color of the line shows how positive or negative the interaction is.
+              </p>
+              <p>
+                The detailed view is activated when the user selects a single goal and shows a breakdown of what the consequences of investing in that goal would be for other goals.
+                This view also shows higher-order influences by taking into account how the selected goal indirectly impacts other goals.
+                Each order of influence is visualized as a circle, with the thickness of the circle showing the total impact of the selected goal.
+                Each circle is then further split up into segments, with each segment representing one goal.
+                The size of each goal segment shows the total influence the previous order goals had on that goal, and the color shows how positive or negative the influence is.
+              </p>
+            </div>
+            <div className="col-sm-5">
+              <img className="image-mapping" alt="Visual structures used" src={imgPicOfMapping} />
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="container">
-        <div className="row" id="description">
-          <div className="col-sm-1" />
-          <div className="col-sm-12">
-            <h1 className="description-title">Description</h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-1" />
-          <div className="col-sm-5">
-            <img className="image-background" alt="The 17 Agenda 2020 goals" src={img10} />
-          </div>
-          <div className="col-sm-5 paragraph" id="background">
-            <h3><br />Background</h3>
-            <p>
-              This project was proposed by the Stockholm Environmental Institute (SEI).
-              SEI is an international non-profit research organization working on environment and sustainable development issues.
-              This visualization is based on the data collected and compiled by the SEI about the United Nations Sustainable Development Goals.
-              The main purpose of this data is to make it possible to analyze the interactions between different Sustainable Development Goals.
-              Our visualization of this data set is intended to help researchers identify important connections and interactions between these goals.
-            </p>
-          </div>
-          <div className="col-sm-1" />
-        </div>
-        <div className="row">
-          <div className="col-sm-1" />
-          <div className="col-sm-6 paragraph">
-            <h3>Mapping</h3>
-            <p>
-              Our visualization features two main views, the overview and the detailed view.
-            </p>
-            <p>
-              The overview shows all the goals we have interaction data for.
-              The interactions between goals are shown as lines, where the color of the line shows how positive or negative the interaction is.
-            </p>
-            <p>
-              The detailed view is activated when the user selects a single goal and shows a breakdown of what the consequences of investing in that goal would be for other goals.
-              This view also shows higher-order influences by taking into account how the selected goal indirectly impacts other goals.
-              Each order of influence is visualized as a circle, with the thickness of the circle showing the total impact of the selected goal.
-              Each circle is then further split up into segments, with each segment representing one goal.
-              The size of each goal segment shows the total influence the previous order goals had on that goal, and the color shows how positive or negative the influence is.
-            </p>
-          </div>
-          <div className="col-sm-5">
-            <img className="image-mapping" alt="Visual structures used" src={imgPicOfMapping} />
-          </div>
-        </div>
         <div className="row team">
           <div className="col-sm-1" />
           <div className="col-sm-10" id="team">
