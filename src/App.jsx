@@ -9,8 +9,8 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Route exact path="/" component={Donut} />
-        <Route path="/about" component={About} />
+        <Route exact path="/ziba/" component={Donut} />
+        <Route path="/ziba/about" component={About} />
       </div>
     </Router>
   );

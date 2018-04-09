@@ -46,7 +46,7 @@ function About() {
                   <div className="embed-container">
                     <iframe
                       title="Ziba Video"
-                      src="https://www.youtube.com/embed/nld6DBwYI3k"
+                      src="https://www.youtube.com/embed/CzAYkxTmy68"
                       frameBorder="0"
                       allowFullScreen
                     />
